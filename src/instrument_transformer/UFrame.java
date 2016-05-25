@@ -2,25 +2,34 @@ package instrument_transformer;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
+
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
+
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+
 import javax.swing.JTable;
 import javax.swing.JLabel;
+
 import java.awt.Insets;
+
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.table.DefaultTableModel;
+
 import java.awt.Color;
+import javax.swing.JScrollPane;
 
 public class UFrame extends JFrame {
 
 	private static final long serialVersionUID = -7263015389943520596L;
-	private JTable table;
+	private JTable UBaseTable;
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
@@ -75,10 +84,10 @@ public class UFrame extends JFrame {
 		JMenuItem mntmword = new JMenuItem("导出数据到word模板");
 		mnNewMenu_1.add(mntmword);
 		GridBagLayout gridBagLayout = new GridBagLayout();
-		gridBagLayout.columnWidths = new int[]{100,100,100,100,100,100,100,100,100,100};
-		gridBagLayout.rowHeights = new int[]{20,20,30,30,30,30,30,30,30,30};
-		gridBagLayout.columnWeights = new double[]{1.0,1.0,1,1.0,1,1,1,1,1,1};
-		gridBagLayout.rowWeights = new double[]{0.2,0.2,1.0,1,1,1,1,1,1,1};
+		gridBagLayout.columnWidths = new int[]{100,100,100,584};
+		gridBagLayout.rowHeights = new int[]{20,20,30};
+		gridBagLayout.columnWeights = new double[]{1.0,1.0,1,1.0};
+		gridBagLayout.rowWeights = new double[]{0.1,0.1,5.0};
 		getContentPane().setLayout(gridBagLayout);
 		
 		JLabel lblNewLabel = new JLabel("电压测试数据列表");
@@ -91,9 +100,7 @@ public class UFrame extends JFrame {
 		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
 		GridBagConstraints gbc_tabbedPane = new GridBagConstraints();
-		gbc_tabbedPane.gridheight = 10;
-		gbc_tabbedPane.gridwidth = 7;
-		gbc_tabbedPane.insets = new Insets(0, 0, 5, 0);
+		gbc_tabbedPane.gridheight = 3;
 		gbc_tabbedPane.fill = GridBagConstraints.BOTH;
 		gbc_tabbedPane.gridx = 3;
 		gbc_tabbedPane.gridy = 0;
@@ -525,36 +532,19 @@ public class UFrame extends JFrame {
 		JPanel panel_3 = new JPanel();
 		tabbedPane.addTab("CA误差", null, panel_3, null);
 		
-		JLabel lblNewLabel_1 = new JLabel("证书编号");
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 1;
-		getContentPane().add(lblNewLabel_1, gbc_lblNewLabel_1);
+		DefaultTableModel model=UBaseInfo.getUTableData();
 		
-		JLabel lblNewLabel_2 = new JLabel("测试人员");
-		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
-		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_2.gridx = 1;
-		gbc_lblNewLabel_2.gridy = 1;
-		getContentPane().add(lblNewLabel_2, gbc_lblNewLabel_2);
-		
-		JLabel lblNewLabel_3 = new JLabel("测试日期");
-		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
-		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel_3.gridx = 2;
-		gbc_lblNewLabel_3.gridy = 1;
-		getContentPane().add(lblNewLabel_3, gbc_lblNewLabel_3);
-		
-		table = new JTable();
-		GridBagConstraints gbc_table = new GridBagConstraints();
-		gbc_table.gridheight = 8;
-		gbc_table.gridwidth = 3;
-		gbc_table.insets = new Insets(0, 0, 5, 5);
-		gbc_table.fill = GridBagConstraints.BOTH;
-		gbc_table.gridx = 0;
-		gbc_table.gridy = 2;
-		getContentPane().add(table, gbc_table);
+		JScrollPane scrollPane = new JScrollPane();
+		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+		gbc_scrollPane.gridheight = 2;
+		gbc_scrollPane.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane.gridwidth = 3;
+		gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
+		gbc_scrollPane.gridx = 0;
+		gbc_scrollPane.gridy = 1;
+		getContentPane().add(scrollPane, gbc_scrollPane);
+		UBaseTable = new JTable(model);
+		scrollPane.setViewportView(UBaseTable);
 	}
 
 }
