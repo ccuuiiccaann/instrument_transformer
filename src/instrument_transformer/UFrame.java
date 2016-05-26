@@ -51,6 +51,7 @@ public class UFrame extends JFrame {
 	private JTextField textField_18;
 	private JTextField textField_19;
 	private JTextField textField_20;
+	private JTable table;
 
 	/**
 	 * Create the frame.
@@ -106,14 +107,14 @@ public class UFrame extends JFrame {
 		gbc_tabbedPane.gridy = 0;
 		getContentPane().add(tabbedPane, gbc_tabbedPane);
 		
-		JPanel panel = new JPanel();
-		tabbedPane.addTab("基本信息", null, panel, null);
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{45, 0,0,0,0,0,0,60};
-		gbl_panel.rowHeights = new int[]{0, 0,0,0,0,0,0,0};
-		gbl_panel.columnWeights = new double[]{1.0,1,1.0,1,1.0,1.0,1.0,1.0};
-		gbl_panel.rowWeights = new double[]{1,1.0,1.0,1.0,1,1.0,1,1.0};
-		panel.setLayout(gbl_panel);
+		JPanel panel_base = new JPanel();
+		tabbedPane.addTab("基本信息", null, panel_base, null);
+		GridBagLayout gbl_panel_base = new GridBagLayout();
+		gbl_panel_base.columnWidths = new int[]{45, 0,0,0,0,0,0,60};
+		gbl_panel_base.rowHeights = new int[]{0, 0,0,0,0,0,0,0};
+		gbl_panel_base.columnWeights = new double[]{1.0,1,1.0,1,1.0,1.0,1.0,1.0};
+		gbl_panel_base.rowWeights = new double[]{1,1.0,1.0,1.0,1,1.0,1,1.0};
+		panel_base.setLayout(gbl_panel_base);
 		
 		JLabel lblNewLabel_4 = new JLabel("户名");
 		GridBagConstraints gbc_lblNewLabel_4 = new GridBagConstraints();
@@ -121,7 +122,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_4.gridwidth = 2;
 		gbc_lblNewLabel_4.gridx = 0;
 		gbc_lblNewLabel_4.gridy = 0;
-		panel.add(lblNewLabel_4, gbc_lblNewLabel_4);
+		panel_base.add(lblNewLabel_4, gbc_lblNewLabel_4);
 		
 		textField = new JTextField();
 		GridBagConstraints gbc_textField = new GridBagConstraints();
@@ -130,7 +131,7 @@ public class UFrame extends JFrame {
 		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField.gridx = 2;
 		gbc_textField.gridy = 0;
-		panel.add(textField, gbc_textField);
+		panel_base.add(textField, gbc_textField);
 		textField.setColumns(10);
 		
 		JLabel lblNewLabel_5 = new JLabel("New label");
@@ -139,7 +140,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_5.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_5.gridx = 4;
 		gbc_lblNewLabel_5.gridy = 0;
-		panel.add(lblNewLabel_5, gbc_lblNewLabel_5);
+		panel_base.add(lblNewLabel_5, gbc_lblNewLabel_5);
 		
 		textField_1 = new JTextField();
 		GridBagConstraints gbc_textField_1 = new GridBagConstraints();
@@ -148,7 +149,7 @@ public class UFrame extends JFrame {
 		gbc_textField_1.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_1.gridx = 6;
 		gbc_textField_1.gridy = 0;
-		panel.add(textField_1, gbc_textField_1);
+		panel_base.add(textField_1, gbc_textField_1);
 		textField_1.setColumns(10);
 		
 		JLabel lblA = new JLabel("A");
@@ -156,7 +157,7 @@ public class UFrame extends JFrame {
 		gbc_lblA.insets = new Insets(0, 0, 5, 5);
 		gbc_lblA.gridx = 0;
 		gbc_lblA.gridy = 1;
-		panel.add(lblA, gbc_lblA);
+		panel_base.add(lblA, gbc_lblA);
 		
 		JLabel lblNewLabel_8 = new JLabel("厂名");
 		GridBagConstraints gbc_lblNewLabel_8 = new GridBagConstraints();
@@ -164,7 +165,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_8.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_8.gridx = 1;
 		gbc_lblNewLabel_8.gridy = 1;
-		panel.add(lblNewLabel_8, gbc_lblNewLabel_8);
+		panel_base.add(lblNewLabel_8, gbc_lblNewLabel_8);
 		
 		textField_2 = new JTextField();
 		GridBagConstraints gbc_textField_2 = new GridBagConstraints();
@@ -172,7 +173,7 @@ public class UFrame extends JFrame {
 		gbc_textField_2.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_2.gridx = 2;
 		gbc_textField_2.gridy = 1;
-		panel.add(textField_2, gbc_textField_2);
+		panel_base.add(textField_2, gbc_textField_2);
 		textField_2.setColumns(10);
 		
 		JLabel lblNewLabel_11 = new JLabel("型式");
@@ -181,7 +182,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_11.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_11.gridx = 3;
 		gbc_lblNewLabel_11.gridy = 1;
-		panel.add(lblNewLabel_11, gbc_lblNewLabel_11);
+		panel_base.add(lblNewLabel_11, gbc_lblNewLabel_11);
 		
 		textField_5 = new JTextField();
 		GridBagConstraints gbc_textField_5 = new GridBagConstraints();
@@ -189,7 +190,7 @@ public class UFrame extends JFrame {
 		gbc_textField_5.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_5.gridx = 4;
 		gbc_textField_5.gridy = 1;
-		panel.add(textField_5, gbc_textField_5);
+		panel_base.add(textField_5, gbc_textField_5);
 		textField_5.setColumns(10);
 		
 		JLabel lblNewLabel_14 = new JLabel("厂号");
@@ -198,7 +199,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_14.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_14.gridx = 5;
 		gbc_lblNewLabel_14.gridy = 1;
-		panel.add(lblNewLabel_14, gbc_lblNewLabel_14);
+		panel_base.add(lblNewLabel_14, gbc_lblNewLabel_14);
 		
 		textField_8 = new JTextField();
 		GridBagConstraints gbc_textField_8 = new GridBagConstraints();
@@ -207,7 +208,7 @@ public class UFrame extends JFrame {
 		gbc_textField_8.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_8.gridx = 6;
 		gbc_textField_8.gridy = 1;
-		panel.add(textField_8, gbc_textField_8);
+		panel_base.add(textField_8, gbc_textField_8);
 		textField_8.setColumns(10);
 		
 		JLabel lblNewLabel_6 = new JLabel("B");
@@ -215,7 +216,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_6.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_6.gridx = 0;
 		gbc_lblNewLabel_6.gridy = 2;
-		panel.add(lblNewLabel_6, gbc_lblNewLabel_6);
+		panel_base.add(lblNewLabel_6, gbc_lblNewLabel_6);
 		
 		JLabel lblNewLabel_9 = new JLabel("厂名");
 		GridBagConstraints gbc_lblNewLabel_9 = new GridBagConstraints();
@@ -223,7 +224,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_9.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_9.gridx = 1;
 		gbc_lblNewLabel_9.gridy = 2;
-		panel.add(lblNewLabel_9, gbc_lblNewLabel_9);
+		panel_base.add(lblNewLabel_9, gbc_lblNewLabel_9);
 		
 		textField_3 = new JTextField();
 		GridBagConstraints gbc_textField_3 = new GridBagConstraints();
@@ -231,7 +232,7 @@ public class UFrame extends JFrame {
 		gbc_textField_3.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_3.gridx = 2;
 		gbc_textField_3.gridy = 2;
-		panel.add(textField_3, gbc_textField_3);
+		panel_base.add(textField_3, gbc_textField_3);
 		textField_3.setColumns(10);
 		
 		JLabel lblNewLabel_12 = new JLabel("型式");
@@ -240,7 +241,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_12.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_12.gridx = 3;
 		gbc_lblNewLabel_12.gridy = 2;
-		panel.add(lblNewLabel_12, gbc_lblNewLabel_12);
+		panel_base.add(lblNewLabel_12, gbc_lblNewLabel_12);
 		
 		textField_6 = new JTextField();
 		GridBagConstraints gbc_textField_6 = new GridBagConstraints();
@@ -248,7 +249,7 @@ public class UFrame extends JFrame {
 		gbc_textField_6.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_6.gridx = 4;
 		gbc_textField_6.gridy = 2;
-		panel.add(textField_6, gbc_textField_6);
+		panel_base.add(textField_6, gbc_textField_6);
 		textField_6.setColumns(10);
 		
 		JLabel lblNewLabel_15 = new JLabel("厂号");
@@ -257,7 +258,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_15.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_15.gridx = 5;
 		gbc_lblNewLabel_15.gridy = 2;
-		panel.add(lblNewLabel_15, gbc_lblNewLabel_15);
+		panel_base.add(lblNewLabel_15, gbc_lblNewLabel_15);
 		
 		textField_9 = new JTextField();
 		GridBagConstraints gbc_textField_9 = new GridBagConstraints();
@@ -266,7 +267,7 @@ public class UFrame extends JFrame {
 		gbc_textField_9.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_9.gridx = 6;
 		gbc_textField_9.gridy = 2;
-		panel.add(textField_9, gbc_textField_9);
+		panel_base.add(textField_9, gbc_textField_9);
 		textField_9.setColumns(10);
 		
 		JLabel lblNewLabel_7 = new JLabel("C");
@@ -274,7 +275,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_7.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_7.gridx = 0;
 		gbc_lblNewLabel_7.gridy = 3;
-		panel.add(lblNewLabel_7, gbc_lblNewLabel_7);
+		panel_base.add(lblNewLabel_7, gbc_lblNewLabel_7);
 		
 		JLabel lblNewLabel_10 = new JLabel("厂名");
 		GridBagConstraints gbc_lblNewLabel_10 = new GridBagConstraints();
@@ -282,7 +283,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_10.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_10.gridx = 1;
 		gbc_lblNewLabel_10.gridy = 3;
-		panel.add(lblNewLabel_10, gbc_lblNewLabel_10);
+		panel_base.add(lblNewLabel_10, gbc_lblNewLabel_10);
 		
 		textField_4 = new JTextField();
 		GridBagConstraints gbc_textField_4 = new GridBagConstraints();
@@ -290,7 +291,7 @@ public class UFrame extends JFrame {
 		gbc_textField_4.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_4.gridx = 2;
 		gbc_textField_4.gridy = 3;
-		panel.add(textField_4, gbc_textField_4);
+		panel_base.add(textField_4, gbc_textField_4);
 		textField_4.setColumns(10);
 		
 		JLabel lblNewLabel_13 = new JLabel("型式");
@@ -299,7 +300,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_13.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_13.gridx = 3;
 		gbc_lblNewLabel_13.gridy = 3;
-		panel.add(lblNewLabel_13, gbc_lblNewLabel_13);
+		panel_base.add(lblNewLabel_13, gbc_lblNewLabel_13);
 		
 		textField_7 = new JTextField();
 		GridBagConstraints gbc_textField_7 = new GridBagConstraints();
@@ -307,7 +308,7 @@ public class UFrame extends JFrame {
 		gbc_textField_7.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_7.gridx = 4;
 		gbc_textField_7.gridy = 3;
-		panel.add(textField_7, gbc_textField_7);
+		panel_base.add(textField_7, gbc_textField_7);
 		textField_7.setColumns(10);
 		
 		JLabel lblNewLabel_16 = new JLabel("厂号");
@@ -316,7 +317,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_16.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_16.gridx = 5;
 		gbc_lblNewLabel_16.gridy = 3;
-		panel.add(lblNewLabel_16, gbc_lblNewLabel_16);
+		panel_base.add(lblNewLabel_16, gbc_lblNewLabel_16);
 		
 		textField_10 = new JTextField();
 		GridBagConstraints gbc_textField_10 = new GridBagConstraints();
@@ -325,7 +326,7 @@ public class UFrame extends JFrame {
 		gbc_textField_10.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_10.gridx = 6;
 		gbc_textField_10.gridy = 3;
-		panel.add(textField_10, gbc_textField_10);
+		panel_base.add(textField_10, gbc_textField_10);
 		textField_10.setColumns(10);
 		
 		JLabel lblNewLabel_17 = new JLabel("额定容量");
@@ -334,7 +335,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_17.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_17.gridx = 0;
 		gbc_lblNewLabel_17.gridy = 4;
-		panel.add(lblNewLabel_17, gbc_lblNewLabel_17);
+		panel_base.add(lblNewLabel_17, gbc_lblNewLabel_17);
 		
 		textField_11 = new JTextField();
 		GridBagConstraints gbc_textField_11 = new GridBagConstraints();
@@ -342,7 +343,7 @@ public class UFrame extends JFrame {
 		gbc_textField_11.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_11.gridx = 2;
 		gbc_textField_11.gridy = 4;
-		panel.add(textField_11, gbc_textField_11);
+		panel_base.add(textField_11, gbc_textField_11);
 		textField_11.setColumns(10);
 		
 		JLabel lblNewLabel_18 = new JLabel("极性");
@@ -351,7 +352,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_18.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_18.gridx = 3;
 		gbc_lblNewLabel_18.gridy = 4;
-		panel.add(lblNewLabel_18, gbc_lblNewLabel_18);
+		panel_base.add(lblNewLabel_18, gbc_lblNewLabel_18);
 		
 		textField_12 = new JTextField();
 		GridBagConstraints gbc_textField_12 = new GridBagConstraints();
@@ -359,7 +360,7 @@ public class UFrame extends JFrame {
 		gbc_textField_12.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_12.gridx = 4;
 		gbc_textField_12.gridy = 4;
-		panel.add(textField_12, gbc_textField_12);
+		panel_base.add(textField_12, gbc_textField_12);
 		textField_12.setColumns(10);
 		
 		JLabel lblNewLabel_19 = new JLabel("变比");
@@ -368,7 +369,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_19.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_19.gridx = 5;
 		gbc_lblNewLabel_19.gridy = 4;
-		panel.add(lblNewLabel_19, gbc_lblNewLabel_19);
+		panel_base.add(lblNewLabel_19, gbc_lblNewLabel_19);
 		
 		textField_13 = new JTextField();
 		GridBagConstraints gbc_textField_13 = new GridBagConstraints();
@@ -377,7 +378,7 @@ public class UFrame extends JFrame {
 		gbc_textField_13.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_13.gridx = 6;
 		gbc_textField_13.gridy = 4;
-		panel.add(textField_13, gbc_textField_13);
+		panel_base.add(textField_13, gbc_textField_13);
 		textField_13.setColumns(10);
 		
 		JLabel lblNewLabel_20 = new JLabel("准确等级");
@@ -386,7 +387,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_20.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_20.gridx = 0;
 		gbc_lblNewLabel_20.gridy = 5;
-		panel.add(lblNewLabel_20, gbc_lblNewLabel_20);
+		panel_base.add(lblNewLabel_20, gbc_lblNewLabel_20);
 		
 		textField_14 = new JTextField();
 		GridBagConstraints gbc_textField_14 = new GridBagConstraints();
@@ -394,7 +395,7 @@ public class UFrame extends JFrame {
 		gbc_textField_14.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_14.gridx = 2;
 		gbc_textField_14.gridy = 5;
-		panel.add(textField_14, gbc_textField_14);
+		panel_base.add(textField_14, gbc_textField_14);
 		textField_14.setColumns(10);
 		
 		JLabel lblNewLabel_21 = new JLabel("出厂年月");
@@ -403,7 +404,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_21.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_21.gridx = 3;
 		gbc_lblNewLabel_21.gridy = 5;
-		panel.add(lblNewLabel_21, gbc_lblNewLabel_21);
+		panel_base.add(lblNewLabel_21, gbc_lblNewLabel_21);
 		
 		textField_15 = new JTextField();
 		GridBagConstraints gbc_textField_15 = new GridBagConstraints();
@@ -411,7 +412,7 @@ public class UFrame extends JFrame {
 		gbc_textField_15.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_15.gridx = 4;
 		gbc_textField_15.gridy = 5;
-		panel.add(textField_15, gbc_textField_15);
+		panel_base.add(textField_15, gbc_textField_15);
 		textField_15.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
@@ -423,7 +424,7 @@ public class UFrame extends JFrame {
 		gbc_panel_4.fill = GridBagConstraints.BOTH;
 		gbc_panel_4.gridx = 5;
 		gbc_panel_4.gridy = 5;
-		panel.add(panel_4, gbc_panel_4);
+		panel_base.add(panel_4, gbc_panel_4);
 		GridBagLayout gbl_panel_4 = new GridBagLayout();
 		gbl_panel_4.columnWidths = new int[]{28,28,28};
 		gbl_panel_4.rowHeights = new int[]{28,28,28};
@@ -495,7 +496,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_23.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_23.gridx = 0;
 		gbc_lblNewLabel_23.gridy = 6;
-		panel.add(lblNewLabel_23, gbc_lblNewLabel_23);
+		panel_base.add(lblNewLabel_23, gbc_lblNewLabel_23);
 		
 		textField_16 = new JTextField();
 		GridBagConstraints gbc_textField_16 = new GridBagConstraints();
@@ -503,7 +504,7 @@ public class UFrame extends JFrame {
 		gbc_textField_16.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_16.gridx = 2;
 		gbc_textField_16.gridy = 6;
-		panel.add(textField_16, gbc_textField_16);
+		panel_base.add(textField_16, gbc_textField_16);
 		textField_16.setColumns(10);
 		
 		JLabel lblNewLabel_24 = new JLabel("频率");
@@ -512,7 +513,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_24.insets = new Insets(0, 0, 5, 5);
 		gbc_lblNewLabel_24.gridx = 3;
 		gbc_lblNewLabel_24.gridy = 6;
-		panel.add(lblNewLabel_24, gbc_lblNewLabel_24);
+		panel_base.add(lblNewLabel_24, gbc_lblNewLabel_24);
 		
 		textField_17 = new JTextField();
 		GridBagConstraints gbc_textField_17 = new GridBagConstraints();
@@ -520,17 +521,150 @@ public class UFrame extends JFrame {
 		gbc_textField_17.fill = GridBagConstraints.HORIZONTAL;
 		gbc_textField_17.gridx = 4;
 		gbc_textField_17.gridy = 6;
-		panel.add(textField_17, gbc_textField_17);
+		panel_base.add(textField_17, gbc_textField_17);
 		textField_17.setColumns(10);
 		
-		JPanel panel_1 = new JPanel();
-		tabbedPane.addTab("AB误差", null, panel_1, null);
+		JPanel panel_ab = new JPanel();
+		tabbedPane.addTab("AB误差", null, panel_ab, null);
+		GridBagLayout layout_ab = new GridBagLayout();
+		layout_ab.columnWidths = new int[]{20, 20,20,40,40,40,40,40};
+		layout_ab.rowHeights = new int[]{20, 40,40,40,40};
+		layout_ab.columnWeights = new double[]{0.1, 0.1,0.2,1,1,1,1,1};
+		layout_ab.rowWeights = new double[]{0.5,1,1,1,1};
+		panel_ab.setLayout(layout_ab);
 		
-		JPanel panel_2 = new JPanel();
-		tabbedPane.addTab("BC误差", null, panel_2, null);
+		JLabel lblNewLabel_1 = new JLabel("百分表");
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_1.gridwidth = 3;
+		gbc_lblNewLabel_1.gridx = 0;
+		gbc_lblNewLabel_1.gridy = 0;
+		panel_ab.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		
+		DefaultTableModel modelAB=UTestDataAB.getUTestDataAB();
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		GridBagConstraints gbc_scrollPane_1 = new GridBagConstraints();
+		gbc_scrollPane_1.gridwidth = 5;
+		gbc_scrollPane_1.fill = GridBagConstraints.BOTH;
+		gbc_scrollPane_1.gridheight = 5;
+		gbc_scrollPane_1.gridx = 3;
+		gbc_scrollPane_1.gridy = 0;
+		panel_ab.add(scrollPane_1, gbc_scrollPane_1);
+		table = new JTable(modelAB);
+		table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+		table.setBorder(new LineBorder(new Color(0, 0, 0)));
+		scrollPane_1.setViewportView(table);
+		
+		JPanel panel = new JPanel();
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.fill = GridBagConstraints.BOTH;
+		gbc_panel.gridheight = 2;
+		gbc_panel.insets = new Insets(0, 0, 5, 5);
+		gbc_panel.gridx = 0;
+		gbc_panel.gridy = 1;
+		panel_ab.add(panel, gbc_panel);
+		GridBagLayout gbl_panel = new GridBagLayout();
+		gbl_panel.columnWidths = new int[]{20, 0};
+		gbl_panel.rowHeights = new int[]{40, 40, 0};
+		gbl_panel.columnWeights = new double[]{0.1, Double.MIN_VALUE};
+		gbl_panel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		panel.setLayout(gbl_panel);
+		
+		JLabel lblNewLabel_2 = new JLabel("<html><br>满<br>载</html>");
+		GridBagConstraints gbc_lblNewLabel_2 = new GridBagConstraints();
+		gbc_lblNewLabel_2.gridheight = 2;
+		gbc_lblNewLabel_2.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_2.gridx = 0;
+		gbc_lblNewLabel_2.gridy = 0;
+		panel.add(lblNewLabel_2, gbc_lblNewLabel_2);
+		
+		JLabel lblNewLabel_28 = new JLabel("<html>比<br>值<br>差</html>");
+		GridBagConstraints gbc_lblNewLabel_28 = new GridBagConstraints();
+		gbc_lblNewLabel_28.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_28.gridx = 1;
+		gbc_lblNewLabel_28.gridy = 1;
+		panel_ab.add(lblNewLabel_28, gbc_lblNewLabel_28);
+		
+		JLabel lblNewLabel_32 = new JLabel("修约值");
+		GridBagConstraints gbc_lblNewLabel_32 = new GridBagConstraints();
+		gbc_lblNewLabel_32.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_32.gridx = 2;
+		gbc_lblNewLabel_32.gridy = 1;
+		panel_ab.add(lblNewLabel_32, gbc_lblNewLabel_32);
+		
+		JLabel lblNewLabel_29 = new JLabel("<html>相<br>位<br>差<html>");
+		GridBagConstraints gbc_lblNewLabel_29 = new GridBagConstraints();
+		gbc_lblNewLabel_29.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_29.gridx = 1;
+		gbc_lblNewLabel_29.gridy = 2;
+		panel_ab.add(lblNewLabel_29, gbc_lblNewLabel_29);
+		
+		JLabel lblNewLabel_33 = new JLabel("修约值");
+		GridBagConstraints gbc_lblNewLabel_33 = new GridBagConstraints();
+		gbc_lblNewLabel_33.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_33.gridx = 2;
+		gbc_lblNewLabel_33.gridy = 2;
+		panel_ab.add(lblNewLabel_33, gbc_lblNewLabel_33);
 		
 		JPanel panel_3 = new JPanel();
-		tabbedPane.addTab("CA误差", null, panel_3, null);
+		panel_3.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		GridBagConstraints gbc_panel_3 = new GridBagConstraints();
+		gbc_panel_3.fill = GridBagConstraints.BOTH;
+		gbc_panel_3.gridheight = 2;
+		gbc_panel_3.insets = new Insets(0, 0, 0, 5);
+		gbc_panel_3.gridx = 0;
+		gbc_panel_3.gridy = 3;
+		panel_ab.add(panel_3, gbc_panel_3);
+		GridBagLayout gbl_panel_3 = new GridBagLayout();
+		gbl_panel_3.columnWidths = new int[]{20, 0};
+		gbl_panel_3.rowHeights = new int[]{40, 40, 0};
+		gbl_panel_3.columnWeights = new double[]{0.1, Double.MIN_VALUE};
+		gbl_panel_3.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		panel_3.setLayout(gbl_panel_3);
+		
+		JLabel lblNewLabel_3 = new JLabel("<html>轻<br>载</html>");
+		GridBagConstraints gbc_lblNewLabel_3 = new GridBagConstraints();
+		gbc_lblNewLabel_3.gridheight = 2;
+		gbc_lblNewLabel_3.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_3.gridx = 0;
+		gbc_lblNewLabel_3.gridy = 0;
+		panel_3.add(lblNewLabel_3, gbc_lblNewLabel_3);
+		
+		JLabel lblNewLabel_30 = new JLabel("<html>比<br>值<br>差</html>");
+		GridBagConstraints gbc_lblNewLabel_30 = new GridBagConstraints();
+		gbc_lblNewLabel_30.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_30.gridx = 1;
+		gbc_lblNewLabel_30.gridy = 3;
+		panel_ab.add(lblNewLabel_30, gbc_lblNewLabel_30);
+		
+		JLabel lblNewLabel_34 = new JLabel("修约值");
+		GridBagConstraints gbc_lblNewLabel_34 = new GridBagConstraints();
+		gbc_lblNewLabel_34.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_34.gridx = 2;
+		gbc_lblNewLabel_34.gridy = 3;
+		panel_ab.add(lblNewLabel_34, gbc_lblNewLabel_34);
+		
+		JLabel lblNewLabel_31 = new JLabel("<html>相<br>位<br>差<html>");
+		GridBagConstraints gbc_lblNewLabel_31 = new GridBagConstraints();
+		gbc_lblNewLabel_31.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNewLabel_31.gridx = 1;
+		gbc_lblNewLabel_31.gridy = 4;
+		panel_ab.add(lblNewLabel_31, gbc_lblNewLabel_31);
+		
+		JLabel lblNewLabel_35 = new JLabel("修约值");
+		GridBagConstraints gbc_lblNewLabel_35 = new GridBagConstraints();
+		gbc_lblNewLabel_35.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNewLabel_35.gridx = 2;
+		gbc_lblNewLabel_35.gridy = 4;
+		panel_ab.add(lblNewLabel_35, gbc_lblNewLabel_35);
+		
+		JPanel panel_bc = new JPanel();
+		tabbedPane.addTab("BC误差", null, panel_bc, null);
+		
+		JPanel panel_ca = new JPanel();
+		tabbedPane.addTab("CA误差", null, panel_ca, null);
 		
 		DefaultTableModel model=UBaseInfo.getUTableData();
 		
