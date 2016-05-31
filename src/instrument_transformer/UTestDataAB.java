@@ -83,7 +83,7 @@ public class UTestDataAB {
 		row4.add(2, "2");
 		row4.add(3, "3");
 		row4.add(4, "4");
-		data.add(row4);
+//		data.add(row4);
 		
 		model.setDataVector(data, column);
 		return model;
