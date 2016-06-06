@@ -21,28 +21,44 @@ public class UBaseInfo {
 		column.add(0, "证书编号");//“证书编号”列
 		column.add(1, "测试人员");//“测试人员”列
 		column.add(2, "测试日期");//“测试日期”列
-		Connection conn=DBConnection.getInstance();
-		try {
-			Statement st=conn.createStatement();
-			//access不能像mysql那样limit只支持类似于oracle的top
-			String sql="select top "+Constant.LIMIT+" certificate_no,tester,test_date from u_base_info order by create_date desc ";
-			ResultSet rs=st.executeQuery(sql);
-			while (rs.next()) {
-				String certificate_no=rs.getString(1);
-				String tester=rs.getString(2);
-				String test_date=rs.getString(3);
-				Vector<String> row=new Vector<>();
-				row.add(0, certificate_no);
-				row.add(1, tester);
-				row.add(2, test_date);
-				data.add(row);
-			}
+//		Connection conn=DBConnection.getInstance();
+//		try {
+//			Statement st=conn.createStatement();
+//			//access不能像mysql那样limit只支持类似于oracle的top
+//			String sql="select top "+Constant.LIMIT+" certificate_no,tester,test_date from u_base_info order by create_date desc ";
+//			ResultSet rs=st.executeQuery(sql);
+//			while (rs.next()) {
+//				String certificate_no=rs.getString(1);
+//				String tester=rs.getString(2);
+//				String test_date=rs.getString(3);
+//				Vector<String> row=new Vector<>();
+//				row.add(0, certificate_no);
+//				row.add(1, tester);
+//				row.add(2, test_date);
+//				data.add(row);
+//			}
+			
+			Vector<String> row1=new Vector<>();
+			row1.add(0,"100001");
+			row1.add(1,"张三");
+			row1.add(2,"2016-01-01");
+			data.add(row1);
+			Vector<String> row2=new Vector<>();
+			row2.add(0,"100001");
+			row2.add(1,"小明");
+			row2.add(2,"2016-01-01");
+			data.add(row2);
+			Vector<String> row3=new Vector<>();
+			row3.add(0,"100001");
+			row3.add(1,"王五");
+			row3.add(2,"2016-01-01");
+			data.add(row3);
 			model.setDataVector(data, column);
-			rs.close();
-			st.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//			rs.close();
+//			st.close();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		
 		return model;
 	}

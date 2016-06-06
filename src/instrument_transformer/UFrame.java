@@ -21,21 +21,28 @@ import java.awt.Insets;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 import java.awt.Color;
+
 import javax.swing.JScrollPane;
+
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 import javax.swing.JSeparator;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ChangeEvent;
 
 public class UFrame extends JFrame {
 
 	private static final long serialVersionUID = -7263015389943520596L;
-	private JTable UBaseTable;
+	private JTable uBaseTable;
 	private JTextField huMing;
 	private JTextField huiLuMingCheng;
 	private JTextField changMing_a;
@@ -103,12 +110,30 @@ public class UFrame extends JFrame {
 		menuBar.add(button_add);
 		
 		JButton button_edit = new JButton("编辑");
+		button_edit.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("编辑");
+			}
+		});
 		menuBar.add(button_edit);
 		
 		JButton button_del = new JButton("删除");
+		button_del.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("删除");
+			}
+		});
 		menuBar.add(button_del);
 		
 		JButton button_save = new JButton("保存");
+		button_save.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				System.out.println("保存");
+			}
+		});
 		menuBar.add(button_save);
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[]{100,100,100,584};
@@ -126,6 +151,13 @@ public class UFrame extends JFrame {
 		getContentPane().add(lblNewLabel, gbc_lblNewLabel);
 		
 		final JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane.addChangeListener(new ChangeListener() {
+			public void stateChanged(ChangeEvent e) {
+				JTabbedPane selectedTab=(JTabbedPane)e.getSource();
+				int index=selectedTab.getSelectedIndex();
+				System.out.println("当前选中的是第"+index+"个tabbedPane");
+			}
+		});
 		tabbedPane.addComponentListener(new ComponentAdapter() {
 			@Override
 			//给tab添加事件，动态改变table的行高
@@ -980,8 +1012,22 @@ public class UFrame extends JFrame {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
 		getContentPane().add(scrollPane, gbc_scrollPane);
-		UBaseTable = new JTable(model);
-		scrollPane.setViewportView(UBaseTable);
+		uBaseTable = new JTable(model);
+		scrollPane.setViewportView(uBaseTable);
+		
+		//为左侧table添加行选中事件
+		uBaseTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(!e.getValueIsAdjusting()){//鼠标释放
+					int row=uBaseTable.getSelectedRow();
+					String s=uBaseTable.getValueAt(row, 0)+"";
+					String s1=uBaseTable.getValueAt(row, 1)+"";
+					String s2=uBaseTable.getValueAt(row, 2)+"";
+					System.out.println(s+","+s1+","+s2);
+				}
+			}
+		});
 	}
 
 }
