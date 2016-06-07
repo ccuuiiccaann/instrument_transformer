@@ -45,8 +45,10 @@ public class DBConnection {
 			mdbFilePath+=s[i]+"\\";
 		}
 		mdbFilePath+="VITest.mdb";//数据库文件名不能更改。
-		mdbFilePath="C:\\Users\\cuican\\Desktop\\互感器校验程序\\VITest.mdb";//打包后需要注释掉，否则数据库文件路径不对。
+//		System.out.println(mdbFilePath);
 //		JOptionPane.showConfirmDialog(null, mdbFilePath);
+//		mdbFilePath="C:\\Users\\cuican\\Desktop\\互感器校验程序\\VITest.mdb";//打包后需要注释掉，否则数据库文件路径不对。
+		mdbFilePath="C:\\VITest.mdb";//打包后需要注释掉，否则数据库文件路径不对。
 		try {
 			Class.forName("com.hxtt.sql.access.AccessDriver").newInstance();
 	        String url = "jdbc:Access:///"+mdbFilePath;
