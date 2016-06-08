@@ -609,7 +609,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_1.gridy = 0;
 		panel_ab.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		DefaultTableModel modelAB=UTestDataAB.getUTestDataAB();
+		DefaultTableModel modelAB=UTestData.getUTestDataAB();
 		
 		JScrollPane scrollPane_ab = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_ab = new GridBagConstraints();
