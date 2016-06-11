@@ -142,7 +142,8 @@ public class UFrame extends JFrame {
 		gridBagLayout.rowWeights = new double[]{0.1,0.1,5.0};
 		getContentPane().setLayout(gridBagLayout);
 		
-		JLabel lblNewLabel = new JLabel("电压测试数据列表");
+		JLabel lblNewLabel = new JLabel("请选择测试数据");
+		lblNewLabel.setForeground(Color.blue);
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.gridwidth = 3;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
@@ -155,6 +156,22 @@ public class UFrame extends JFrame {
 			public void stateChanged(ChangeEvent e) {
 				JTabbedPane selectedTab=(JTabbedPane)e.getSource();
 				int index=selectedTab.getSelectedIndex();
+				System.out.println("选中tab的index="+index);
+				if(index==1){
+					Constant.TAB_ABC=Constant.TEST_DATA_A;
+					System.out.println("开始加载测试数据a");
+					table_ab.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+					
+				}else if(index==2){
+					Constant.TAB_ABC=Constant.TEST_DATA_B;
+					table_bc.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+				}else if(index==3){
+					Constant.TAB_ABC=Constant.TEST_DATA_C;
+					table_ca.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+				}else {
+					Constant.TAB_ABC=Constant.TEST_DATA_BASE;
+					//TODO:加载基础数据
+				}
 				System.out.println("当前选中的是第"+index+"个tabbedPane");
 			}
 		});
@@ -609,7 +626,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_1.gridy = 0;
 		panel_ab.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		DefaultTableModel modelAB=UTestData.getUTestDataAB();
+		DefaultTableModel modelAB=UTestData.getUTestDataAB(Constant.BASE_ID,Constant.TAB_ABC);
 		
 		JScrollPane scrollPane_ab = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_ab = new GridBagConstraints();
@@ -1024,7 +1041,19 @@ public class UFrame extends JFrame {
 					String s=uBaseTable.getValueAt(row, 0)+"";
 					String s1=uBaseTable.getValueAt(row, 1)+"";
 					String s2=uBaseTable.getValueAt(row, 2)+"";
-					System.out.println(s+","+s1+","+s2);
+//					System.out.println(s+","+s1+","+s2);
+					Constant.BASE_ID=s;
+					//加载数据
+					if(Constant.TAB_ABC.equals(Constant.TEST_DATA_A)){
+						table_ab.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+						
+					}if(Constant.TAB_ABC.equals(Constant.TEST_DATA_B)){
+						table_bc.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+					}if(Constant.TAB_ABC.equals(Constant.TEST_DATA_C)){
+						table_ca.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+					}else {
+						//TODO:加载基础数据
+					}
 				}
 			}
 		});
