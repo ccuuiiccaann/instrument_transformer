@@ -13,11 +13,6 @@ import javax.swing.JOptionPane;
  * 不用手动关闭此数据库连接。
  * 程序退出时关闭连接。防止频繁开启、关闭连接产生性能问题。
  * @author cuican
- *
- */
-/**
- * @author cuican
- *
  */
 public class DBConnection {
 	private static Connection conn=null;
