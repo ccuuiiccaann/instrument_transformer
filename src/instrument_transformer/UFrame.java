@@ -33,9 +33,14 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.Map;
+import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.JSeparator;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ChangeEvent;
 
@@ -170,7 +175,7 @@ public class UFrame extends JFrame {
 					table_ca.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
 				}else {
 					Constant.TAB_ABC=Constant.TEST_DATA_BASE;
-					//TODO:加载基础数据
+					loadUBaseInfo(Constant.BASE_ID);
 				}
 				System.out.println("当前选中的是第"+index+"个tabbedPane");
 			}
@@ -881,13 +886,6 @@ public class UFrame extends JFrame {
 		JPanel panel_ca = new JPanel();
 		tabbedPane.addTab("CA误差", null, panel_ca, null);
 		GridBagLayout layout_ca = new GridBagLayout();
-		/*
-		GridBagLayout layout_ab = new GridBagLayout();
-		layout_ab.columnWidths = new int[]{20, 20,20,40,40,40,40,40};
-		layout_ab.rowHeights = new int[]{20, 40,40,40,40};
-		layout_ab.columnWeights = new double[]{0.1, 0.1,0.2,1,1,1,1,1};
-		layout_ab.rowWeights = new double[]{0.5,1,1,1,1};
-		*/
 		layout_ca.columnWidths = new int[]{20, 20,20,40,40,40,40,40};
 		layout_ca.rowHeights = new int[]{20, 40,40,40,40};
 		layout_ca.columnWeights = new double[]{0.1, 0.1,0.2,1,1,1,1,1};
@@ -1041,7 +1039,7 @@ public class UFrame extends JFrame {
 					String s=uBaseTable.getValueAt(row, 0)+"";
 					String s1=uBaseTable.getValueAt(row, 1)+"";
 					String s2=uBaseTable.getValueAt(row, 2)+"";
-//					System.out.println(s+","+s1+","+s2);
+					System.out.println("当前选中行"+row);
 					Constant.BASE_ID=s;
 					//加载数据
 					if(Constant.TAB_ABC.equals(Constant.TEST_DATA_A)){
@@ -1052,11 +1050,46 @@ public class UFrame extends JFrame {
 					}if(Constant.TAB_ABC.equals(Constant.TEST_DATA_C)){
 						table_ca.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
 					}else {
-						//TODO:加载基础数据
+						loadUBaseInfo(Constant.BASE_ID);
 					}
 				}
 			}
 		});
+		//左侧表格默认选中第一行
+		uBaseTable.setRowSelectionInterval(0, 0);
+	}
+	
+	
+
+	/**
+	 * 为基本信息区的textFile加载数据
+	 * @param baseId
+	 */
+	public void loadUBaseInfo(String baseId){
+		if(huMing!=null){//不为空时，表示frame已经初始化了jtextfield，否则会报错。
+			Map< String, String> map= UBaseInfo.getUBaseInfo(baseId);
+			this.huMing.setText(map.get("huMing"));
+			this.huiLuMingCheng.setText(map.get("huiLuMingCheng"));
+			this.changMing_a.setText(map.get("changMing_a"));
+			this.changMing_b.setText(map.get("changMing_b"));
+			this.changMing_c.setText(map.get("changMing_c"));
+			this.xingShi_a.setText(map.get("xingShi_a"));
+			this.xingShi_b.setText(map.get("xingShi_b"));
+			this.xingShi_c.setText(map.get("xingShi_c"));
+			this.changHao_a.setText(map.get("changHao_a"));
+			this.changHao_b.setText(map.get("changHao_b"));
+			this.changHao_c.setText(map.get("changHao_c"));
+			this.eDingRongLiang.setText(map.get("eDingRongLiang"));
+			this.jiXing.setText(map.get("jiXing"));
+			this.bianBi.setText(map.get("bianBi"));
+			this.zhunQueDengJi.setText(map.get("zhunQueDengJi"));
+			this.chuChangNianYue.setText(map.get("chuChangNianYue"));
+			this.dianYa.setText(map.get("dianYa"));
+			this.pinLv.setText(map.get("pinLv"));
+			this.juBianHao_a.setText(map.get("juBianHao_a"));
+			this.juBianHao_b.setText(map.get("juBianHao_b"));
+			this.juBianHao_c.setText(map.get("juBianHao_c"));
+		}
 	}
 
 }

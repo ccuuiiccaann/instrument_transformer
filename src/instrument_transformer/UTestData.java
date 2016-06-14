@@ -9,7 +9,7 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * 电压互感器的测试数据
+ * 电压，测试数据操作
  * @author cuican
  *
  */
