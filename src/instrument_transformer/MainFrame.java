@@ -19,16 +19,24 @@ public class MainFrame extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	private static UFrame uFrame;
+	public  static UFrame uFrame;
 	public static MainFrame frame;
 	public static Connection conn;
+	/**
+	 * 初始化
+	 * 1.数据库连接(单例的）
+	 * 2.电压主界面UFrame并设置为不显示，需要时显示即可，不用重新new。其它Frame也用此种处理方式。
+	 * 
+	 */
 	public static void init(){
 		//获取数据库连接
 		conn=DBConnection.getInstance();
+		//初始化电压主frame并设置为不显示
 		if(uFrame==null){
 			uFrame=new UFrame();
 		}
 		uFrame.setVisible(false);
+		
 	}
 	public static void main(String[] args) {
 		init();

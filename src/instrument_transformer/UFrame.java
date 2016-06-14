@@ -59,11 +59,26 @@ public class UFrame extends JFrame {
 	private JTable table_ab;
 	private JTable table_ca;
 	private JTable table_bc;
+	/**
+	 * 新增时弹出的frame
+	 */
+	private static  UAddFrame uAddFrame;
 
+	/**
+	 * 初始化
+	 * 1.新增时弹出的uAddFrame，并设置为不显示，需要时直接显示即可，不用重复new
+	 */
+	public static  void init(){
+		if(uAddFrame==null){
+			uAddFrame=new UAddFrame();
+		}
+		uAddFrame.setVisible(false);
+	}
 	/**
 	 * Create the frame.
 	 */
 	public UFrame() {
+		init();
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -96,7 +111,8 @@ public class UFrame extends JFrame {
 		button_add.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				System.out.println("add");
+				setVisible(false);
+				uAddFrame.setVisible(true);
 			}
 		});
 		menuBar.add(button_add);

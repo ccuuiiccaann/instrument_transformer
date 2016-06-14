@@ -118,4 +118,14 @@ public class UBaseInfo {
 		}
 		return null;
 	}
+	
+	/**
+	 * 插入电压基本信息数据
+	 * @param map 键值对，key为JTextField 变量名，value为该变量对应的值
+	 * @return true成功，否则失败
+	 */
+	public static boolean addUBaseInfo(HashMap<String,String> map) {
+		boolean result=false;
+		return false;
+	}
 }
