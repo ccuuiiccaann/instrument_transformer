@@ -1,48 +1,35 @@
 package instrument_transformer;
 
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-
-import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
-
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-
-import javax.swing.JTable;
-import javax.swing.JLabel;
-
-import java.awt.Insets;
-
-import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-import javax.swing.border.LineBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import javax.swing.table.DefaultTableModel;
-
 import java.awt.Color;
-
-import javax.swing.JScrollPane;
-
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.Map;
-import java.util.Vector;
 
 import javax.swing.JButton;
-import javax.swing.event.ChangeListener;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTabbedPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.LineBorder;
 import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
 
 public class UFrame extends JFrame {
 
@@ -1028,6 +1015,10 @@ public class UFrame extends JFrame {
 		gbc_scrollPane.gridy = 1;
 		getContentPane().add(scrollPane, gbc_scrollPane);
 		uBaseTable = new JTable(model);
+		TableColumn col_id=uBaseTable.getColumnModel().getColumn(0);
+		col_id.setPreferredWidth(20);
+		col_id.setMinWidth(5);
+		col_id.setMaxWidth(30);
 		scrollPane.setViewportView(uBaseTable);
 		
 		//为左侧table添加行选中事件
@@ -1037,8 +1028,8 @@ public class UFrame extends JFrame {
 				if(!e.getValueIsAdjusting()){//鼠标释放
 					int row=uBaseTable.getSelectedRow();
 					String s=uBaseTable.getValueAt(row, 0)+"";
-					String s1=uBaseTable.getValueAt(row, 1)+"";
-					String s2=uBaseTable.getValueAt(row, 2)+"";
+//					String s1=uBaseTable.getValueAt(row, 1)+"";
+//					String s2=uBaseTable.getValueAt(row, 2)+"";
 					System.out.println("当前选中行"+row);
 					Constant.BASE_ID=s;
 					//加载数据
