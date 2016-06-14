@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
@@ -124,8 +125,30 @@ public class UBaseInfo {
 	 * @param map 键值对，key为JTextField 变量名，value为该变量对应的值
 	 * @return true成功，否则失败
 	 */
-	public static boolean addUBaseInfo(HashMap<String,String> map) {
+	public static boolean addUBaseInfo(Map<String, String> map) {
 		boolean result=false;
-		return false;
+		try {
+			Connection conn=DBConnection.getInstance();
+			Statement st=conn.createStatement();
+			//统计行数用来计算id
+			String countSql="select count(1) as c from u_base_info ";
+			ResultSet rs=st.executeQuery(countSql);
+			Long count=0L;
+			while (rs.next()){
+				count=rs.getLong("c");
+			}
+			String id=Long.toString(count+1);//计算id
+			//TODO:构建插入的sql
+			String sql="";
+			int i=st.executeUpdate(sql);
+			if(i==1){
+				result=true;
+			}else {
+				result=false;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 }

@@ -203,9 +203,9 @@ public class UFrame extends JFrame {
 		JPanel panel_base = new JPanel();
 		tabbedPane.addTab("基本信息", null, panel_base, null);
 		GridBagLayout gbl_panel_base = new GridBagLayout();
-		gbl_panel_base.columnWidths = new int[]{45, 0,80,0,80,0,0,60};
+		gbl_panel_base.columnWidths = new int[]{45, 0,80,0,80,0,0,60,50};
 		gbl_panel_base.rowHeights = new int[]{0, 0,0,0,0,0,0,0};
-		gbl_panel_base.columnWeights = new double[]{1.0,1,1.0,1,1.0,1.0,1.0,1.0};
+		gbl_panel_base.columnWeights = new double[]{1.0,1,1.0,1,1.0,1.0,1.0,1.0,1.0};
 		gbl_panel_base.rowWeights = new double[]{1,1.0,1.0,1.0,1,1.0,1,1.0};
 		panel_base.setLayout(gbl_panel_base);
 		
