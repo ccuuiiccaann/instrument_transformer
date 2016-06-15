@@ -605,6 +605,10 @@ public class UAddFrame extends JFrame {
 					JOptionPane.showMessageDialog(null, "保存成功。");
 					setVisible(false);
 					MainFrame.uFrame.setVisible(true);
+					if(MainFrame.uFrame.uBaseTable!=null){
+						MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+//						MainFrame.uFrame.uBaseTable.updateUI();
+					}
 				}else {
 					JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
 				}

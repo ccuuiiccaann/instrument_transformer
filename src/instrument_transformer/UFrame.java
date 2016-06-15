@@ -35,7 +35,7 @@ import javax.swing.SwingConstants;
 public class UFrame extends JFrame {
 
 	private static final long serialVersionUID = -7263015389943520596L;
-	private JTable uBaseTable;
+	public JTable uBaseTable;
 	private JTextField huMing;
 	private JTextField huiLuMingCheng;
 	private JTextField changMing_a;
@@ -1044,6 +1044,11 @@ public class UFrame extends JFrame {
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting()){//鼠标释放
 					int row=uBaseTable.getSelectedRow();
+					if(row<0){
+						row=0;//刷新时，可能出现失去焦点的情况，故始终默认选中第一行
+						uBaseTable.setRowSelectionInterval(0, 0);
+					}
+						
 					String s=uBaseTable.getValueAt(row, 0)+"";
 //					String s1=uBaseTable.getValueAt(row, 1)+"";
 //					String s2=uBaseTable.getValueAt(row, 2)+"";

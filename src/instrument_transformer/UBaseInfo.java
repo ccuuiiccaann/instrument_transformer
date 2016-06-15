@@ -32,7 +32,8 @@ public class UBaseInfo {
 		try {
 			Statement st=conn.createStatement();
 			//access不能像mysql那样limit只支持类似于oracle的top
-			String sql="select top "+Constant.LIMIT+" id,certificate_no,test_date from u_base_info order by test_date desc ";
+			String sql="select top "+Constant.LIMIT+" id,certificate_no,test_date from u_base_info order by create_date desc ";
+			System.out.println("电压，为左侧table加载数据的sql："+sql);
 			ResultSet rs=st.executeQuery(sql);
 			while (rs.next()) {
 				String id=rs.getString(1);
@@ -138,8 +139,53 @@ public class UBaseInfo {
 				count=rs.getLong("c");
 			}
 			String id=Long.toString(count+1);//计算id
-			//TODO:构建插入的sql
-			String sql="";
+			String create_date=DateUtil.getCurDate();//当前时间
+			//TODO:构成插入的sql
+			String name=map.get("huMing");
+			String loop=map.get("huiLuMingCheng");
+			String factory_name_a=map.get("changMing_a");
+			String factory_name_b=map.get("changMing_b");
+			String factory_name_c=map.get("changMing_c");
+			String model_a=map.get("xingShi_a");
+			String model_b=map.get("xingShi_b");
+			String model_c=map.get("xingShi_c");
+			String factory_no_a=map.get("changHao_a");
+			String factory_no_b=map.get("changHao_b");
+			String factory_no_c=map.get("changHao_c");
+			String volume=map.get("eDingRongLiang");//额定容量
+			String polarity=map.get("jiXing");//极性
+			String transformer_ratio=map.get("bianBi");//变比（变压比）
+			String correctly_level=map.get("zhunQueDengJi");//准确等级
+			String factory_date=map.get("chuChangNianYue");//出厂年月
+			String rated_voltage=map.get("dianYa");//电压（额定电压）
+			String frequency=map.get("pinLv");//频率
+			String no_a=map.get("juBianHao_a");
+			String no_b=map.get("juBianHao_b");
+			String no_c=map.get("juBianHao_c");
+			String certificate_no=map.get("zhengShuBianHao");//证书编号
+			String tester=map.get("ceShiRen");
+			String test_date=map.get("ceShiRiQi");
+			String conclusion=map.get("ceShiJieLun");//测试结论
+			String sql="insert into u_base_info "
+						+ "(id,name,loop,"
+						+ "factory_name_a,factory_name_b,factory_name_c,"
+						+ "model_a,model_b,model_c,"
+						+ "factory_no_a,factory_no_b,factory_no_c,"
+						+ "volume,polarity,transformer_ratio,correctly_level,"
+						+ "factory_date,rated_voltage,frequency,"
+						+ "no_a,no_b,no_c,"
+						+ "certificate_no,tester,test_date,conclusion,create_date) "
+					+ "values"
+						+ "('"+id+"','"+name+"','"+loop+"',"
+						+ "'"+factory_name_a+"','"+factory_name_b+"','"+factory_name_c+"',"
+						+ "'"+model_a+"','"+model_b+"','"+model_c+"',"
+						+ "'"+factory_no_a+"','"+factory_no_b+"','"+factory_no_c+"',"
+						+ "'"+volume+"','"+polarity+"','"+transformer_ratio+"','"+correctly_level+"',"
+						+ "'"+factory_date+"','"+rated_voltage+"','"+frequency+"',"
+						+ "'"+no_a+"','"+no_b+"','"+no_c+"',"
+						+ "'"+certificate_no+"','"+tester+"','"+test_date+"','"+conclusion+"','"+create_date+"'"
+						+ ") ";
+			System.out.println("新增电压基本信息：sql "+sql);
 			int i=st.executeUpdate(sql);
 			if(i==1){
 				result=true;
