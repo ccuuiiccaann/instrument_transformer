@@ -30,6 +30,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.SwingConstants;
 
 public class UFrame extends JFrame {
 
@@ -509,7 +510,7 @@ public class UFrame extends JFrame {
 		chuChangNianYue.setColumns(10);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setBorder(new LineBorder(Color.LIGHT_GRAY, 3));
+		panel_4.setBorder(new LineBorder(new Color(192, 192, 192)));
 		GridBagConstraints gbc_panel_4 = new GridBagConstraints();
 		gbc_panel_4.gridheight = 3;
 		gbc_panel_4.gridwidth = 3;
@@ -519,9 +520,9 @@ public class UFrame extends JFrame {
 		gbc_panel_4.gridy = 5;
 		panel_base.add(panel_4, gbc_panel_4);
 		GridBagLayout gbl_panel_4 = new GridBagLayout();
-		gbl_panel_4.columnWidths = new int[]{28,28,28};
+		gbl_panel_4.columnWidths = new int[]{20,10,54};
 		gbl_panel_4.rowHeights = new int[]{28,28,28};
-		gbl_panel_4.columnWeights = new double[]{1,1,1.0};
+		gbl_panel_4.columnWeights = new double[]{1,0.5,1.0};
 		gbl_panel_4.rowWeights = new double[]{1,1,1};
 		panel_4.setLayout(gbl_panel_4);
 		
