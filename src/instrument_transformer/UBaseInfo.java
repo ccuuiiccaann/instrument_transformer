@@ -132,15 +132,14 @@ public class UBaseInfo {
 			Connection conn=DBConnection.getInstance();
 			Statement st=conn.createStatement();
 			//统计行数用来计算id
-			String countSql="select count(1) as c from u_base_info ";
+			String countSql="select max(id) as c from u_base_info ";
 			ResultSet rs=st.executeQuery(countSql);
 			Long count=0L;
 			while (rs.next()){
 				count=rs.getLong("c");
 			}
-			String id=Long.toString(count+1);//计算id
+			Long id=count+1;//计算id
 			String create_date=DateUtil.getCurDate();//当前时间
-			//TODO:构成插入的sql
 			String name=map.get("huMing");
 			String loop=map.get("huiLuMingCheng");
 			String factory_name_a=map.get("changMing_a");
@@ -176,7 +175,7 @@ public class UBaseInfo {
 						+ "no_a,no_b,no_c,"
 						+ "certificate_no,tester,test_date,conclusion,create_date) "
 					+ "values"
-						+ "('"+id+"','"+name+"','"+loop+"',"
+						+ "("+id+",'"+name+"','"+loop+"',"
 						+ "'"+factory_name_a+"','"+factory_name_b+"','"+factory_name_c+"',"
 						+ "'"+model_a+"','"+model_b+"','"+model_c+"',"
 						+ "'"+factory_no_a+"','"+factory_no_b+"','"+factory_no_c+"',"
