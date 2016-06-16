@@ -197,4 +197,45 @@ public class UBaseInfo {
 		}
 		return result;
 	}
+	
+	/**
+	 * 删除电压互感器的数据（基本信息+测试数据）。
+	 * 两个删除是一个事务
+	 * @param baseId 基本信息id
+	 * @return true成功，否则失败
+	 */
+	public  static boolean delUData(String baseId){
+		boolean result=false;
+		String sql1="delete from u_test_data where base_id='"+ baseId+"'";
+		String sql2="delete from u_base_info where id='"+baseId+"'";
+		System.out.println("删除电压测试数据"+sql1);
+		System.out.println("删除电压基础数据"+sql2);
+		Connection conn=DBConnection.getInstance();
+		try {
+			conn.setAutoCommit(false);
+			Statement st=conn.createStatement();
+			st.executeUpdate(sql1);
+			st.executeUpdate(sql2);
+			conn.commit();
+			return true;
+		} catch (SQLException e) {
+			System.err.println("删除电压互感器数据出错！");
+			try {
+				System.out.println("事务回滚。");
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.err.println("事务回滚出错");
+				e1.printStackTrace();
+			}
+			e.printStackTrace();
+		}finally{
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.err.println("设置数据库AutoCommit出错");
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }

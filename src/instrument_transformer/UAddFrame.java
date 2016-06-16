@@ -607,7 +607,6 @@ public class UAddFrame extends JFrame {
 					MainFrame.uFrame.setVisible(true);
 					if(MainFrame.uFrame.uBaseTable!=null){
 						MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
-//						MainFrame.uFrame.uBaseTable.updateUI();
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);

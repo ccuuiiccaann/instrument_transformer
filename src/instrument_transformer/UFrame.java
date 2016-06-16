@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
@@ -132,6 +133,21 @@ public class UFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("删除");
+				if(Constant.BASE_ID==null || "".equals(Constant.BASE_ID)){
+					JOptionPane.showMessageDialog(null, "请在左侧表格中选择需要删除的数据");
+				}
+				int choose=JOptionPane.showConfirmDialog(null, "确定删除id为["+Constant.BASE_ID+"]的这批数据吗？\n删除之后不能恢复。", "删除", JOptionPane.OK_CANCEL_OPTION);
+				if(choose==JOptionPane.OK_OPTION){
+					boolean result=UBaseInfo.delUData(Constant.BASE_ID);
+					if(result){
+						JOptionPane.showMessageDialog(null, "删除成功");
+						if(MainFrame.uFrame.uBaseTable!=null){
+							MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "删除出错！");
+					}
+				}
 			}
 		});
 		menuBar.add(button_del);
