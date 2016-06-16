@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 import java.util.Vector;
 
 import javax.swing.table.DefaultTableModel;
@@ -129,8 +130,9 @@ public class UBaseInfo {
 	 */
 	public static boolean addUBaseInfo(Map<String, String> map) {
 		boolean result=false;
+		Connection conn=DBConnection.getInstance();
 		try {
-			Connection conn=DBConnection.getInstance();
+			conn.setAutoCommit(false);
 			Statement st=conn.createStatement();
 			//统计行数用来计算id
 			String countSql="select max(id) as c from u_base_info ";
@@ -186,16 +188,48 @@ public class UBaseInfo {
 						+ "'"+certificate_no+"','"+tester+"','"+test_date+"','"+conclusion+"','"+create_date+"'"
 						+ ") ";
 			System.out.println("新增电压基本信息：sql "+sql);
-			
-			//TODO:添加事务，插入空的测试数据（基本的类型要有，如A、B、C误差，满轻载等初始值要有
-			int i=st.executeUpdate(sql);
-			if(i==1){
-				result=true;
-			}else {
-				result=false;
+			st.executeUpdate(sql);
+			//插入测试数据,一组基础数据对应12条测试数据。
+			//12条数据是3个误差（ab，bc，ca）、满载+轻载（2种情况）、比差+角差（2种情况）的组合，3*2*2=12
+			String[] deviation={Constant.TEST_DATA_A,Constant.TEST_DATA_B,Constant.TEST_DATA_C};//ab、bc、ca误差
+			String[] sn_ln={Constant.SN,Constant.LN};//满载、轻载
+			System.out.println("插入电压测试数据:");
+			for (int i = 0; i < deviation.length; i++) {
+				for (int j = 0; j < sn_ln.length; j++) {
+					//比差
+					String sql1="insert into u_test_data(id,base_id,deviation,rate_error,sn_ln) "
+							+ "values "
+							+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[i]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[j]+"') ";
+					//角差
+					String sql2="insert into u_test_data(id,base_id,deviation,angle_error,sn_ln) "
+							+ "values "
+							+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[i]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[j]+"') ";//比差
+					System.out.println(sql1);
+					System.out.println(sql2);
+					st.executeUpdate(sql1);
+					st.executeUpdate(sql2);
+					
+				}
 			}
+			
+			conn.commit();
+			return true;
 		} catch (SQLException e) {
+			System.err.println("电压，新增出错，回滚！");
+			try {
+				conn.rollback();
+			} catch (SQLException e1) {
+				System.err.println("回滚出错！");
+				e1.printStackTrace();
+			}
 			e.printStackTrace();
+		}finally{
+			try {
+				conn.setAutoCommit(true);
+			} catch (SQLException e) {
+				System.err.println("setAutoCommit出错！");
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
@@ -206,7 +240,7 @@ public class UBaseInfo {
 	 * @param baseId 基本信息id
 	 * @return true成功，否则失败
 	 */
-	public  static boolean delUData(String baseId){
+	public static boolean delUData(String baseId){
 		boolean result=false;
 		String sql1="delete from u_test_data where base_id='"+ baseId+"'";
 		String sql2="delete from u_base_info where id='"+baseId+"'";
