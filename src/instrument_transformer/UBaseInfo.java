@@ -122,7 +122,8 @@ public class UBaseInfo {
 	}
 	
 	/**
-	 * 插入电压基本信息数据
+	 * 插入电压基本信息数据，同时插入空的测试数据信息。这样在录入测试数据时，只需update即可
+	 * 两个插入操作是一个事务
 	 * @param map 键值对，key为JTextField 变量名，value为该变量对应的值
 	 * @return true成功，否则失败
 	 */
@@ -185,6 +186,8 @@ public class UBaseInfo {
 						+ "'"+certificate_no+"','"+tester+"','"+test_date+"','"+conclusion+"','"+create_date+"'"
 						+ ") ";
 			System.out.println("新增电压基本信息：sql "+sql);
+			
+			//TODO:添加事务，插入空的测试数据（基本的类型要有，如A、B、C误差，满轻载等初始值要有
 			int i=st.executeUpdate(sql);
 			if(i==1){
 				result=true;
