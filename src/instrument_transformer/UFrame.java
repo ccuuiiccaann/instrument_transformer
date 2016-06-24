@@ -32,6 +32,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
+import javax.swing.table.TableModel;
 import javax.swing.SwingConstants;
 
 public class UFrame extends JFrame {
@@ -153,13 +154,7 @@ public class UFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("保存");
-				if(Constant.TAB_ABC==Constant.TEST_DATA_A){//如果选中的是tab a
-					//TODO:
-				}else if(Constant.TAB_ABC==Constant.TEST_DATA_B){//如果选中的是tab b
-					//TODO:
-				}else if(Constant.TAB_ABC==Constant.TEST_DATA_C){//如果选中的是tab c
-					//TODO:
-				}else {//选中的是基本信息tab
+				if(Constant.TAB_ABC.equals(Constant.TEST_DATA_BASE)) {//选中的是基本信息tab
 					Map<String, String> map=new HashMap<>();
 					map.put("huMing", huMing.getText());
 					map.put("huiLuMingCheng", huiLuMingCheng.getText());
@@ -187,6 +182,24 @@ public class UFrame extends JFrame {
 					map.put("ceShiRiQi", ceShiRiQi.getText());
 					map.put("ceShiJieLun", ceShiJieLun.getText());
 					boolean b=UBaseInfo.updateUBaseData(map, Constant.BASE_ID);
+					if(b){
+						JOptionPane.showMessageDialog(null, "保存成功。");
+						if(MainFrame.uFrame.uBaseTable!=null){
+							MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
+					}
+				}else {
+					TableModel model=new DefaultTableModel();
+					if(Constant.TAB_ABC.equals(Constant.TEST_DATA_A)){//如果选中的是tab a
+						model=table_ab.getModel();
+					}else if(Constant.TAB_ABC.equals(Constant.TEST_DATA_B)){//如果选中的是tab b
+						model=table_bc.getModel();
+					}else if(Constant.TAB_ABC.equals(Constant.TEST_DATA_C)){//如果选中的是tab c
+						model=table_ca.getModel();
+					}
+					boolean b=UTestData.updateUTestData(model, Constant.TAB_ABC, Constant.BASE_ID);
 					if(b){
 						JOptionPane.showMessageDialog(null, "保存成功。");
 						if(MainFrame.uFrame.uBaseTable!=null){
@@ -225,14 +238,14 @@ public class UFrame extends JFrame {
 				if(index==1){
 					Constant.TAB_ABC=Constant.TEST_DATA_A;
 					System.out.println("开始加载测试数据a");
-					table_ab.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+					table_ab.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
 					
 				}else if(index==2){
 					Constant.TAB_ABC=Constant.TEST_DATA_B;
-					table_bc.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+					table_bc.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
 				}else if(index==3){
 					Constant.TAB_ABC=Constant.TEST_DATA_C;
-					table_ca.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+					table_ca.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
 				}else {
 					Constant.TAB_ABC=Constant.TEST_DATA_BASE;
 					loadUBaseInfo(Constant.BASE_ID);
@@ -759,7 +772,7 @@ public class UFrame extends JFrame {
 		gbc_lblNewLabel_1.gridy = 0;
 		panel_ab.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		DefaultTableModel modelAB=UTestData.getUTestDataAB(Constant.BASE_ID,Constant.TAB_ABC);
+		DefaultTableModel modelAB=UTestData.getUTestData(Constant.BASE_ID,Constant.TAB_ABC);
 		
 		JScrollPane scrollPane_ab = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_ab = new GridBagConstraints();
@@ -770,6 +783,7 @@ public class UFrame extends JFrame {
 		gbc_scrollPane_ab.gridy = 0;
 		panel_ab.add(scrollPane_ab, gbc_scrollPane_ab);
 		table_ab = new JTable(modelAB);
+		table_ab.putClientProperty("terminateEditOnFocusLost", true);//不失去焦点，正在编辑的cell值也能提交
 		table_ab.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 		table_ab.setBorder(new LineBorder(new Color(0, 0, 0)));
 		scrollPane_ab.setViewportView(table_ab);
@@ -905,6 +919,7 @@ public class UFrame extends JFrame {
 		panel_bc.add(scrollPane_bc, gbc_scrollPane_bc);
 		
 		table_bc = new JTable(modelAB);
+		table_bc.putClientProperty("terminateEditOnFocusLost", true);//不失去焦点，正在编辑的cell值也能提交
 		scrollPane_bc.setViewportView(table_bc);
 		
 		JPanel panel_2 = new JPanel();
@@ -1038,6 +1053,7 @@ public class UFrame extends JFrame {
 		panel_ca.add(scrollPane_ca, gbc_scrollPane_ca);
 		
 		table_ca = new JTable(modelAB);
+		table_ca.putClientProperty("terminateEditOnFocusLost", true);//不失去焦点，正在编辑的cell值也能提交
 		scrollPane_ca.setViewportView(table_ca);
 		
 		JPanel panel_7 = new JPanel();
@@ -1180,12 +1196,12 @@ public class UFrame extends JFrame {
 					Constant.BASE_ID=s;
 					//加载数据
 					if(Constant.TAB_ABC.equals(Constant.TEST_DATA_A)){
-						table_ab.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+						table_ab.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
 						
 					}if(Constant.TAB_ABC.equals(Constant.TEST_DATA_B)){
-						table_bc.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+						table_bc.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
 					}if(Constant.TAB_ABC.equals(Constant.TEST_DATA_C)){
-						table_ca.setModel(UTestData.getUTestDataAB(Constant.BASE_ID, Constant.TAB_ABC));
+						table_ca.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
 					}else {
 						loadUBaseInfo(Constant.BASE_ID);
 					}

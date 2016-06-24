@@ -219,8 +219,9 @@ public class UBaseInfo {
 					
 				}
 			}
-			
 			conn.commit();
+			rs.close();
+			st.close();
 			return true;
 		} catch (SQLException e) {
 			System.err.println("电压，新增出错，回滚！");
@@ -261,6 +262,7 @@ public class UBaseInfo {
 			st.executeUpdate(sql1);
 			st.executeUpdate(sql2);
 			conn.commit();
+			st.close();
 			return true;
 		} catch (SQLException e) {
 			System.err.println("删除电压互感器数据出错！");
@@ -331,6 +333,7 @@ public class UBaseInfo {
 						+ "where id="+baseId;
 			System.out.println("编辑电压基本信息： "+sql);
 			st.executeUpdate(sql);
+			st.close();
 			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();

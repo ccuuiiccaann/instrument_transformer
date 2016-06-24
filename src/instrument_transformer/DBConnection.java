@@ -2,6 +2,7 @@ package instrument_transformer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -43,11 +44,18 @@ public class DBConnection {
 //		mdbFilePath="C:\\Users\\cuican\\Desktop\\互感器校验程序\\VITest.mdb";//打包后需要注释掉，否则数据库文件路径不对。
 		mdbFilePath="C:\\VITest.mdb";//打包后需要注释掉，否则数据库文件路径不对。
 		try {
+			
 			Class.forName("com.hxtt.sql.access.AccessDriver").newInstance();
 	        String url = "jdbc:Access:///"+mdbFilePath;
 	        conn = DriverManager.getConnection(url);
+	        /*       
+			String strurl="jdbc:odbc:driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\VITest.mdb";  
+			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");  
+			conn=DriverManager.getConnection(strurl) ;
+*/
 		} catch (Exception e) {
-			JOptionPane.showConfirmDialog(null, "获取数据库连接失败。请确认"+path+"/VITest.mdb文件存在。");
+			e.printStackTrace();
+//			JOptionPane.showConfirmDialog(null, "获取数据库连接失败。请确认"+path+"/VITest.mdb文件存在。");
 		}
 		
 	}
