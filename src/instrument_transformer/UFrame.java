@@ -129,7 +129,7 @@ public class UFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("删除");
-				if(Constant.BASE_ID==null || "".equals(Constant.BASE_ID)){
+				if(Constant.BASE_ID==null || Constant.BASE_ID<0){
 					JOptionPane.showMessageDialog(null, "请在左侧表格中选择需要删除的数据");
 				}
 				int choose=JOptionPane.showConfirmDialog(null, "确定删除id为["+Constant.BASE_ID+"]的这批数据吗？\n删除之后不能恢复。", "删除", JOptionPane.OK_CANCEL_OPTION);
@@ -153,9 +153,6 @@ public class UFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("保存");
-				JTabbedPane selectedTab=(JTabbedPane)e.getSource();
-				int index=selectedTab.getSelectedIndex();
-				System.out.println("选中tab的index="+index);
 				if(Constant.TAB_ABC==Constant.TEST_DATA_A){//如果选中的是tab a
 					//TODO:
 				}else if(Constant.TAB_ABC==Constant.TEST_DATA_B){//如果选中的是tab b
@@ -189,11 +186,9 @@ public class UFrame extends JFrame {
 					map.put("ceShiRen", ceShiRen.getText());
 					map.put("ceShiRiQi", ceShiRiQi.getText());
 					map.put("ceShiJieLun", ceShiJieLun.getText());
-					boolean b=UBaseInfo.addUBaseInfo(map);
+					boolean b=UBaseInfo.updateUBaseData(map, Constant.BASE_ID);
 					if(b){
 						JOptionPane.showMessageDialog(null, "保存成功。");
-						setVisible(false);
-						MainFrame.uFrame.setVisible(true);
 						if(MainFrame.uFrame.uBaseTable!=null){
 							MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
 						}
@@ -201,7 +196,6 @@ public class UFrame extends JFrame {
 						JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
 					}
 				}
-				System.out.println("当前选中的是第"+index+"个tabbedPane");
 				
 			}
 		});
@@ -1179,7 +1173,7 @@ public class UFrame extends JFrame {
 						uBaseTable.setRowSelectionInterval(0, 0);
 					}
 						
-					String s=uBaseTable.getValueAt(row, 0)+"";
+					Long s=Long.parseLong(uBaseTable.getValueAt(row, 0)+"");
 //					String s1=uBaseTable.getValueAt(row, 1)+"";
 //					String s2=uBaseTable.getValueAt(row, 2)+"";
 					System.out.println("当前选中行"+row);
@@ -1208,7 +1202,7 @@ public class UFrame extends JFrame {
 	 * 为基本信息区的textFile加载数据
 	 * @param baseId
 	 */
-	public void loadUBaseInfo(String baseId){
+	public void loadUBaseInfo(Long baseId){
 		if(huMing!=null){//不为空时，表示frame已经初始化了jtextfield，否则会报错。
 			Map< String, String> map= UBaseInfo.getUBaseInfo(baseId);
 			this.huMing.setText(map.get("huMing"));

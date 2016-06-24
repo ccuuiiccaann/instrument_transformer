@@ -49,7 +49,7 @@ public class Constant {
 	/**
 	 * 当前选中的基本信息id
 	 */
-	public static String BASE_ID="";
+	public static Long BASE_ID=-1L;
 	/**
 	 * 当前选中的tab是A、B、还是C。例如，选中的是A，则此变量值为A(即Constant.TEST_DATA_A)。
 	 */

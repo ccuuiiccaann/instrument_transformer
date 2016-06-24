@@ -21,7 +21,7 @@ public class UTestData {
 	 * @param tab_abc 选中的是哪个测试数据（a、b or c）
 	 * @return DefaultTableModel对象，作为Jtable实例化的参数
 	 */
-	public static DefaultTableModel getUTestDataAB(String baseId,String tab_abc){
+	public static DefaultTableModel getUTestDataAB(Long baseId,String tab_abc){
 		DefaultTableModel model=new DefaultTableModel();
 		Vector<Vector<String>> data=new Vector<>();//table的数据
 		Vector<String> column=new Vector<>();//table的列名
@@ -37,7 +37,7 @@ public class UTestData {
 		Connection conn=DBConnection.getInstance();
 		try {
 			Statement st=conn.createStatement();
-			String sql="select * from u_test_data where base_id='"+baseId+"' and deviation='"+tab_abc+"' ";
+			String sql="select * from u_test_data where base_id="+baseId+" and deviation='"+tab_abc+"' ";
 			System.out.println(sql);
 			ResultSet rs=st.executeQuery(sql);
 			while (rs.next()) {
@@ -81,47 +81,11 @@ public class UTestData {
 				}
 				
 			}
-			//model.setDataVector(data, column);
 			rs.close();
 			st.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-//		Vector<String> row0=new Vector<>();
-//		row0.add(0, "0");
-//		row0.add(1, "1");
-//		row0.add(2, "2");
-//		row0.add(3, "3");
-//		row0.add(4, "4");
-//		data.add(row0);
-//		Vector<String> row1=new Vector<>();
-//		row1.add(0, "0");
-//		row1.add(1, "1");
-//		row1.add(2, "2");
-//		row1.add(3, "3");
-//		row1.add(4, "4");
-//		data.add(row1);
-//		Vector<String> row2=new Vector<>();
-//		row2.add(0, "0");
-//		row2.add(1, "1");
-//		row2.add(2, "2");
-//		row2.add(3, "3");
-//		row2.add(4, "4");
-//		data.add(row2);
-//		Vector<String> row3=new Vector<>();
-//		row3.add(0, "0");
-//		row3.add(1, "1");
-//		row3.add(2, "2");
-//		row3.add(3, "3");
-//		row3.add(4, "4");
-//		data.add(row3);
-//		Vector<String> row4=new Vector<>();
-//		row4.add(0, "0");
-//		row4.add(1, "1");
-//		row4.add(2, "2");
-//		row4.add(3, "3");
-//		row4.add(4, "4");
-////		data.add(row4);
 		data.add(row1);
 		data.add(row2);
 		data.add(row3);

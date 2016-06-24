@@ -62,12 +62,12 @@ public class UBaseInfo {
 	 * @param baseId
 	 * @return HashMap,key为JTextField 变量名，value为该变量对应的值
 	 */
-	public static HashMap<String,String> getUBaseInfo(String baseId){
+	public static HashMap<String,String> getUBaseInfo(Long baseId){
 		HashMap<String,String> map=new HashMap<>();
 		Connection conn=DBConnection.getInstance();
 		try {
 			Statement st=conn.createStatement();
-			String sql="select *  from u_base_info where id='"+baseId+"'";
+			String sql="select *  from u_base_info where id="+baseId+"";
 			ResultSet rs=st.executeQuery(sql);
 			while (rs.next()) {
 				String huMing=rs.getString("name");
@@ -248,10 +248,10 @@ public class UBaseInfo {
 	 * @param baseId 基本信息id
 	 * @return true成功，否则失败
 	 */
-	public static boolean delUData(String baseId){
+	public static boolean delUData(Long baseId){
 		boolean result=false;
-		String sql1="delete from u_test_data where base_id='"+ baseId+"'";
-		String sql2="delete from u_base_info where id='"+baseId+"'";
+		String sql1="delete from u_test_data where base_id="+baseId+"";
+		String sql2="delete from u_base_info where id="+baseId+"";
 		System.out.println("删除电压测试数据"+sql1);
 		System.out.println("删除电压基础数据"+sql2);
 		Connection conn=DBConnection.getInstance();
@@ -289,8 +289,52 @@ public class UBaseInfo {
 	 * @param baseId 被更新的记录的id
 	 * @return true成功，否则失败
 	 */
-	public static boolean updateUBaseData(Map map,String baseId){
-		boolean result=false;
-		return result;
+	public static boolean updateUBaseData(Map<String,String> map,Long baseId){
+		Connection conn=DBConnection.getInstance();
+		try {
+			Statement st=conn.createStatement();
+//			String create_date=DateUtil.getCurDate();//当前时间
+			String name=map.get("huMing");
+			String loop=map.get("huiLuMingCheng");
+			String factory_name_a=map.get("changMing_a");
+			String factory_name_b=map.get("changMing_b");
+			String factory_name_c=map.get("changMing_c");
+			String model_a=map.get("xingShi_a");
+			String model_b=map.get("xingShi_b");
+			String model_c=map.get("xingShi_c");
+			String factory_no_a=map.get("changHao_a");
+			String factory_no_b=map.get("changHao_b");
+			String factory_no_c=map.get("changHao_c");
+			String volume=map.get("eDingRongLiang");//额定容量
+			String polarity=map.get("jiXing");//极性
+			String transformer_ratio=map.get("bianBi");//变比（变压比）
+			String correctly_level=map.get("zhunQueDengJi");//准确等级
+			String factory_date=map.get("chuChangNianYue");//出厂年月
+			String rated_voltage=map.get("dianYa");//电压（额定电压）
+			String frequency=map.get("pinLv");//频率
+			String no_a=map.get("juBianHao_a");
+			String no_b=map.get("juBianHao_b");
+			String no_c=map.get("juBianHao_c");
+			String certificate_no=map.get("zhengShuBianHao");//证书编号
+			String tester=map.get("ceShiRen");
+			String test_date=map.get("ceShiRiQi");
+			String conclusion=map.get("ceShiJieLun");//测试结论
+			String sql="update u_base_info "
+						+ "set name='"+name+"',loop='"+loop+"',"
+						+ "factory_name_a='"+factory_name_a+"',factory_name_b='"+factory_name_b+"',factory_name_c='"+factory_name_c+"',"
+						+ "model_a='"+model_a+"',model_b='"+model_b+"',model_c='"+model_c+"',"
+						+ "factory_no_a='"+factory_no_a+"',factory_no_b='"+factory_no_b+"',factory_no_c='"+factory_no_c+"',"
+						+ "volume='"+volume+"',polarity='"+polarity+"',transformer_ratio='"+transformer_ratio+"',correctly_level='"+correctly_level+"',"
+						+ "factory_date='"+factory_date+"',rated_voltage='"+rated_voltage+"',frequency='"+frequency+"',"
+						+ "no_a='"+no_a+"',no_b='"+no_b+"',no_c='"+no_c+"',"
+						+ "certificate_no='"+certificate_no+"',tester='"+tester+"',test_date='"+test_date+"',conclusion='"+conclusion+"' "
+						+ "where id="+baseId;
+			System.out.println("编辑电压基本信息： "+sql);
+			st.executeUpdate(sql);
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
 	}
 }
