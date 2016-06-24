@@ -10,6 +10,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
@@ -65,6 +66,10 @@ public class UFrame extends JFrame {
 	 * 新增时弹出的frame
 	 */
 	private static  UAddFrame uAddFrame;
+	private JTextField zhengShuBianHao;
+	private JTextField ceShiRen;
+	private JTextField ceShiRiQi;
+	private JTextField ceShiJieLun;
 
 	/**
 	 * 初始化
@@ -119,15 +124,6 @@ public class UFrame extends JFrame {
 		});
 		menuBar.add(button_add);
 		
-		JButton button_edit = new JButton("编辑");
-		button_edit.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				System.out.println("编辑");
-			}
-		});
-		menuBar.add(button_edit);
-		
 		JButton button_del = new JButton("删除");
 		button_del.addMouseListener(new MouseAdapter() {
 			@Override
@@ -157,6 +153,56 @@ public class UFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				System.out.println("保存");
+				JTabbedPane selectedTab=(JTabbedPane)e.getSource();
+				int index=selectedTab.getSelectedIndex();
+				System.out.println("选中tab的index="+index);
+				if(Constant.TAB_ABC==Constant.TEST_DATA_A){//如果选中的是tab a
+					//TODO:
+				}else if(Constant.TAB_ABC==Constant.TEST_DATA_B){//如果选中的是tab b
+					//TODO:
+				}else if(Constant.TAB_ABC==Constant.TEST_DATA_C){//如果选中的是tab c
+					//TODO:
+				}else {//选中的是基本信息tab
+					Map<String, String> map=new HashMap<>();
+					map.put("huMing", huMing.getText());
+					map.put("huiLuMingCheng", huiLuMingCheng.getText());
+					map.put("changMing_a", changMing_a.getText());
+					map.put("changMing_b", changMing_b.getText());
+					map.put("changMing_c", changMing_c.getText());
+					map.put("xingShi_a", xingShi_a.getText());
+					map.put("xingShi_b", xingShi_b.getText());
+					map.put("xingShi_c", xingShi_c.getText());
+					map.put("changHao_a", changHao_a.getText());
+					map.put("changHao_b", changHao_b.getText());
+					map.put("changHao_c", changHao_c.getText());
+					map.put("eDingRongLiang", eDingRongLiang.getText());
+					map.put("jiXing", jiXing.getText());
+					map.put("bianBi", bianBi.getText());
+					map.put("zhunQueDengJi", zhunQueDengJi.getText());
+					map.put("chuChangNianYue", chuChangNianYue.getText());
+					map.put("dianYa", dianYa.getText());
+					map.put("pinLv", pinLv.getText());
+					map.put("juBianHao_a", juBianHao_a.getText());
+					map.put("juBianHao_b", juBianHao_b.getText());
+					map.put("juBianHao_c", juBianHao_c.getText());
+					map.put("zhengShuBianHao",zhengShuBianHao.getText());
+					map.put("ceShiRen", ceShiRen.getText());
+					map.put("ceShiRiQi", ceShiRiQi.getText());
+					map.put("ceShiJieLun", ceShiJieLun.getText());
+					boolean b=UBaseInfo.addUBaseInfo(map);
+					if(b){
+						JOptionPane.showMessageDialog(null, "保存成功。");
+						setVisible(false);
+						MainFrame.uFrame.setVisible(true);
+						if(MainFrame.uFrame.uBaseTable!=null){
+							MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+						}
+					}else {
+						JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
+					}
+				}
+				System.out.println("当前选中的是第"+index+"个tabbedPane");
+				
 			}
 		});
 		menuBar.add(button_save);
@@ -221,9 +267,9 @@ public class UFrame extends JFrame {
 		tabbedPane.addTab("基本信息", null, panel_base, null);
 		GridBagLayout gbl_panel_base = new GridBagLayout();
 		gbl_panel_base.columnWidths = new int[]{45, 0,80,0,80,0,0,60,50};
-		gbl_panel_base.rowHeights = new int[]{0, 0,0,0,0,0,0,0};
+		gbl_panel_base.rowHeights = new int[]{0, 0,0,0,0,0,0,0,0};
 		gbl_panel_base.columnWeights = new double[]{1.0,1,1.0,1,1.0,1.0,1.0,1.0,1.0};
-		gbl_panel_base.rowWeights = new double[]{1,1.0,1.0,1.0,1,1.0,1,1.0};
+		gbl_panel_base.rowWeights = new double[]{1,1.0,1.0,1.0,1,1.0,1,1.0,1.0};
 		panel_base.setLayout(gbl_panel_base);
 		
 		JLabel lblNewLabel_4 = new JLabel("户名");
@@ -255,7 +301,7 @@ public class UFrame extends JFrame {
 		huiLuMingCheng = new JTextField();
 		GridBagConstraints gbc_huiLuMingCheng = new GridBagConstraints();
 		gbc_huiLuMingCheng.gridwidth = 2;
-		gbc_huiLuMingCheng.insets = new Insets(0, 0, 5, 0);
+		gbc_huiLuMingCheng.insets = new Insets(0, 0, 5, 5);
 		gbc_huiLuMingCheng.fill = GridBagConstraints.HORIZONTAL;
 		gbc_huiLuMingCheng.gridx = 6;
 		gbc_huiLuMingCheng.gridy = 0;
@@ -314,7 +360,7 @@ public class UFrame extends JFrame {
 		changHao_a = new JTextField();
 		GridBagConstraints gbc_changHao_a = new GridBagConstraints();
 		gbc_changHao_a.gridwidth = 2;
-		gbc_changHao_a.insets = new Insets(0, 0, 5, 0);
+		gbc_changHao_a.insets = new Insets(0, 0, 5, 5);
 		gbc_changHao_a.fill = GridBagConstraints.HORIZONTAL;
 		gbc_changHao_a.gridx = 6;
 		gbc_changHao_a.gridy = 1;
@@ -373,7 +419,7 @@ public class UFrame extends JFrame {
 		changHao_b = new JTextField();
 		GridBagConstraints gbc_changHao_b = new GridBagConstraints();
 		gbc_changHao_b.gridwidth = 2;
-		gbc_changHao_b.insets = new Insets(0, 0, 5, 0);
+		gbc_changHao_b.insets = new Insets(0, 0, 5, 5);
 		gbc_changHao_b.fill = GridBagConstraints.HORIZONTAL;
 		gbc_changHao_b.gridx = 6;
 		gbc_changHao_b.gridy = 2;
@@ -432,7 +478,7 @@ public class UFrame extends JFrame {
 		changHao_c = new JTextField();
 		GridBagConstraints gbc_changHao_c = new GridBagConstraints();
 		gbc_changHao_c.gridwidth = 2;
-		gbc_changHao_c.insets = new Insets(0, 0, 5, 0);
+		gbc_changHao_c.insets = new Insets(0, 0, 5, 5);
 		gbc_changHao_c.fill = GridBagConstraints.HORIZONTAL;
 		gbc_changHao_c.gridx = 6;
 		gbc_changHao_c.gridy = 3;
@@ -484,7 +530,7 @@ public class UFrame extends JFrame {
 		bianBi = new JTextField();
 		GridBagConstraints gbc_bianBi = new GridBagConstraints();
 		gbc_bianBi.gridwidth = 2;
-		gbc_bianBi.insets = new Insets(0, 0, 5, 0);
+		gbc_bianBi.insets = new Insets(0, 0, 5, 5);
 		gbc_bianBi.fill = GridBagConstraints.HORIZONTAL;
 		gbc_bianBi.gridx = 6;
 		gbc_bianBi.gridy = 4;
@@ -633,6 +679,74 @@ public class UFrame extends JFrame {
 		gbc_pinLv.gridy = 6;
 		panel_base.add(pinLv, gbc_pinLv);
 		pinLv.setColumns(10);
+		
+		JLabel lblNewLabel_36 = new JLabel("证书编号");
+		GridBagConstraints gbc_lblNewLabel_36 = new GridBagConstraints();
+		gbc_lblNewLabel_36.gridwidth = 2;
+		gbc_lblNewLabel_36.insets = new Insets(0, 0, 5, 5);
+		gbc_lblNewLabel_36.gridx = 0;
+		gbc_lblNewLabel_36.gridy = 7;
+		panel_base.add(lblNewLabel_36, gbc_lblNewLabel_36);
+		
+		zhengShuBianHao = new JTextField();
+		GridBagConstraints gbc_zhengShuBianHao = new GridBagConstraints();
+		gbc_zhengShuBianHao.insets = new Insets(0, 0, 5, 5);
+		gbc_zhengShuBianHao.fill = GridBagConstraints.HORIZONTAL;
+		gbc_zhengShuBianHao.gridx = 2;
+		gbc_zhengShuBianHao.gridy = 7;
+		panel_base.add(zhengShuBianHao, gbc_zhengShuBianHao);
+		zhengShuBianHao.setColumns(10);
+		
+		JLabel label_22 = new JLabel("测试日期");
+		GridBagConstraints gbc_label_22 = new GridBagConstraints();
+		gbc_label_22.anchor = GridBagConstraints.EAST;
+		gbc_label_22.insets = new Insets(0, 0, 5, 5);
+		gbc_label_22.gridx = 3;
+		gbc_label_22.gridy = 7;
+		panel_base.add(label_22, gbc_label_22);
+		
+		ceShiRiQi = new JTextField();
+		GridBagConstraints gbc_ceShiRiQi = new GridBagConstraints();
+		gbc_ceShiRiQi.insets = new Insets(0, 0, 5, 5);
+		gbc_ceShiRiQi.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ceShiRiQi.gridx = 4;
+		gbc_ceShiRiQi.gridy = 7;
+		panel_base.add(ceShiRiQi, gbc_ceShiRiQi);
+		ceShiRiQi.setColumns(10);
+		
+		JLabel lblNewLabel_37 = new JLabel("测试人");
+		GridBagConstraints gbc_lblNewLabel_37 = new GridBagConstraints();
+		gbc_lblNewLabel_37.gridwidth = 2;
+		gbc_lblNewLabel_37.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNewLabel_37.gridx = 0;
+		gbc_lblNewLabel_37.gridy = 8;
+		panel_base.add(lblNewLabel_37, gbc_lblNewLabel_37);
+		
+		ceShiRen = new JTextField();
+		GridBagConstraints gbc_ceShiRen = new GridBagConstraints();
+		gbc_ceShiRen.insets = new Insets(0, 0, 0, 5);
+		gbc_ceShiRen.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ceShiRen.gridx = 2;
+		gbc_ceShiRen.gridy = 8;
+		panel_base.add(ceShiRen, gbc_ceShiRen);
+		ceShiRen.setColumns(10);
+		
+		JLabel lblNewLabel_38 = new JLabel("测试结论");
+		GridBagConstraints gbc_lblNewLabel_38 = new GridBagConstraints();
+		gbc_lblNewLabel_38.insets = new Insets(0, 0, 0, 5);
+		gbc_lblNewLabel_38.gridx = 3;
+		gbc_lblNewLabel_38.gridy = 8;
+		panel_base.add(lblNewLabel_38, gbc_lblNewLabel_38);
+		
+		ceShiJieLun = new JTextField();
+		GridBagConstraints gbc_ceShiJieLun = new GridBagConstraints();
+		gbc_ceShiJieLun.gridwidth = 4;
+		gbc_ceShiJieLun.insets = new Insets(0, 0, 0, 5);
+		gbc_ceShiJieLun.fill = GridBagConstraints.HORIZONTAL;
+		gbc_ceShiJieLun.gridx = 4;
+		gbc_ceShiJieLun.gridy = 8;
+		panel_base.add(ceShiJieLun, gbc_ceShiJieLun);
+		ceShiJieLun.setColumns(10);
 		
 		JPanel panel_ab = new JPanel();
 		tabbedPane.addTab("AB误差", null, panel_ab, null);
@@ -1118,6 +1232,10 @@ public class UFrame extends JFrame {
 			this.juBianHao_a.setText(map.get("juBianHao_a"));
 			this.juBianHao_b.setText(map.get("juBianHao_b"));
 			this.juBianHao_c.setText(map.get("juBianHao_c"));
+			this.ceShiRen.setText(map.get("ceShiRen"));
+			this.ceShiRiQi.setText(map.get("ceShiRiQi"));
+			this.ceShiJieLun.setText(map.get("ceShiJieLun"));
+			this.zhengShuBianHao.setText(map.get("zhengShuBianHao"));
 		}
 	}
 

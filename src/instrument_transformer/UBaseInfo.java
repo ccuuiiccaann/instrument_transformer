@@ -91,6 +91,10 @@ public class UBaseInfo {
 				String juBianHao_a=rs.getString("no_a");
 				String juBianHao_b=rs.getString("no_a");
 				String juBianHao_c=rs.getString("no_a");
+				String zhengShuBianHao=rs.getString("certificate_no");
+				String ceShiRen=rs.getString("tester");
+				String ceShiRiQi=rs.getString("test_date");
+				String ceShiJieLun=rs.getString("conclusion");
 				map.put("huMing", huMing);
 				map.put("huiLuMingCheng", huiLuMingCheng);
 				map.put("changMing_a", changMing_a);
@@ -112,6 +116,10 @@ public class UBaseInfo {
 				map.put("juBianHao_a", juBianHao_a);
 				map.put("juBianHao_b", juBianHao_b);
 				map.put("juBianHao_c", juBianHao_c);
+				map.put("zhengShuBianHao",zhengShuBianHao);
+				map.put("ceShiRen",ceShiRen);
+				map.put("ceShiRiQi",ceShiRiQi);
+				map.put("ceShiJieLun", ceShiJieLun);
 			}
 			rs.close();
 			st.close();
@@ -272,6 +280,17 @@ public class UBaseInfo {
 				e.printStackTrace();
 			}
 		}
+		return result;
+	}
+	
+	/**
+	 * 更新电压的基本数据
+	 * @param map 待更新的结果集，键值对形式，key为JTextField 变量名，value为该变量对应的值
+	 * @param baseId 被更新的记录的id
+	 * @return true成功，否则失败
+	 */
+	public static boolean updateUBaseData(Map map,String baseId){
+		boolean result=false;
 		return result;
 	}
 }
