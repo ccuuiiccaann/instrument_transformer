@@ -33,12 +33,11 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
-import javax.swing.SwingConstants;
 
 public class IFrame extends JFrame {
 
 	private static final long serialVersionUID = -7263015389943520596L;
-	public JTable uBaseTable;
+	public JTable iBaseTable;
 	private JTextField huMing;
 	private JTextField huiLuMingCheng;
 	private JTextField changMing_a;
@@ -66,7 +65,7 @@ public class IFrame extends JFrame {
 	/**
 	 * 新增时弹出的frame
 	 */
-	private static  UAddFrame uAddFrame;
+	private static IAddFrame iAddFrame;
 	private JTextField zhengShuBianHao;
 	private JTextField ceShiRen;
 	private JTextField ceShiRiQi;
@@ -77,10 +76,10 @@ public class IFrame extends JFrame {
 	 * 1.新增时弹出的uAddFrame，并设置为不显示，需要时直接显示即可，不用重复new
 	 */
 	public static  void init(){
-		if(uAddFrame==null){
-			uAddFrame=new UAddFrame();
+		if(iAddFrame==null){
+			iAddFrame=new IAddFrame();
 		}
-		uAddFrame.setVisible(false);
+		iAddFrame.setVisible(false);
 	}
 	/**
 	 * Create the frame.
@@ -120,7 +119,7 @@ public class IFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				uAddFrame.setVisible(true);
+				iAddFrame.setVisible(true);
 			}
 		});
 		menuBar.add(button_add);
@@ -135,11 +134,11 @@ public class IFrame extends JFrame {
 				}
 				int choose=JOptionPane.showConfirmDialog(null, "确定删除id为["+Constant.BASE_ID+"]的这批数据吗？\n删除之后不能恢复。", "删除", JOptionPane.OK_CANCEL_OPTION);
 				if(choose==JOptionPane.OK_OPTION){
-					boolean result=UBaseInfo.delUData(Constant.BASE_ID);
+					boolean result=IBaseInfo.delIData(Constant.BASE_ID);
 					if(result){
 						JOptionPane.showMessageDialog(null, "删除成功");
-						if(MainFrame.uFrame.uBaseTable!=null){
-							MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+						if(MainFrame.iFrame.iBaseTable!=null){
+							MainFrame.iFrame.iBaseTable.setModel(IBaseInfo.getITableData());
 						}
 					}else {
 						JOptionPane.showMessageDialog(null, "删除出错！");
@@ -181,11 +180,11 @@ public class IFrame extends JFrame {
 					map.put("ceShiRen", ceShiRen.getText());
 					map.put("ceShiRiQi", ceShiRiQi.getText());
 					map.put("ceShiJieLun", ceShiJieLun.getText());
-					boolean b=UBaseInfo.updateUBaseData(map, Constant.BASE_ID);
+					boolean b=IBaseInfo.updateIBaseData(map, Constant.BASE_ID);
 					if(b){
 						JOptionPane.showMessageDialog(null, "保存成功。");
-						if(MainFrame.uFrame.uBaseTable!=null){
-							MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+						if(MainFrame.iFrame.iBaseTable!=null){
+							MainFrame.iFrame.iBaseTable.setModel(IBaseInfo.getITableData());
 						}
 					}else {
 						JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
@@ -199,11 +198,11 @@ public class IFrame extends JFrame {
 					}else if(Constant.TAB_ABC.equals(Constant.TEST_DATA_C)){//如果选中的是tab c
 						model=table_ca.getModel();
 					}
-					boolean b=UTestData.updateUTestData(model, Constant.TAB_ABC, Constant.BASE_ID);
+					boolean b=ITestData.updateITestData(model, Constant.TAB_ABC, Constant.BASE_ID);
 					if(b){
 						JOptionPane.showMessageDialog(null, "保存成功。");
-						if(MainFrame.uFrame.uBaseTable!=null){
-							MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+						if(MainFrame.iFrame.iBaseTable!=null){
+							MainFrame.iFrame.iBaseTable.setModel(IBaseInfo.getITableData());
 						}
 					}else {
 						JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
@@ -238,17 +237,17 @@ public class IFrame extends JFrame {
 				if(index==1){
 					Constant.TAB_ABC=Constant.TEST_DATA_A;
 					System.out.println("开始加载测试数据a");
-					table_ab.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
+					table_ab.setModel(ITestData.getITestData(Constant.BASE_ID, Constant.TAB_ABC));
 					
 				}else if(index==2){
 					Constant.TAB_ABC=Constant.TEST_DATA_B;
-					table_bc.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
+					table_bc.setModel(ITestData.getITestData(Constant.BASE_ID, Constant.TAB_ABC));
 				}else if(index==3){
 					Constant.TAB_ABC=Constant.TEST_DATA_C;
-					table_ca.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
+					table_ca.setModel(ITestData.getITestData(Constant.BASE_ID, Constant.TAB_ABC));
 				}else {
 					Constant.TAB_ABC=Constant.TEST_DATA_BASE;
-					loadUBaseInfo(Constant.BASE_ID);
+					loadIBaseInfo(Constant.BASE_ID);
 				}
 				System.out.println("当前选中的是第"+index+"个tabbedPane");
 			}
@@ -772,7 +771,7 @@ public class IFrame extends JFrame {
 		gbc_lblNewLabel_1.gridy = 0;
 		panel_ab.add(lblNewLabel_1, gbc_lblNewLabel_1);
 		
-		DefaultTableModel modelAB=UTestData.getUTestData(Constant.BASE_ID,Constant.TAB_ABC);
+		DefaultTableModel modelAB=ITestData.getITestData(Constant.BASE_ID,Constant.TAB_ABC);
 		
 		JScrollPane scrollPane_ab = new JScrollPane();
 		GridBagConstraints gbc_scrollPane_ab = new GridBagConstraints();
@@ -1160,7 +1159,7 @@ public class IFrame extends JFrame {
 		gbc_label_21.gridy = 4;
 		panel_ca.add(label_21, gbc_label_21);
 		
-		DefaultTableModel model=UBaseInfo.getUTableData();
+		DefaultTableModel model=IBaseInfo.getITableData();
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -1171,45 +1170,45 @@ public class IFrame extends JFrame {
 		gbc_scrollPane.gridx = 0;
 		gbc_scrollPane.gridy = 1;
 		getContentPane().add(scrollPane, gbc_scrollPane);
-		uBaseTable = new JTable(model);
-		TableColumn col_id=uBaseTable.getColumnModel().getColumn(0);
+		iBaseTable = new JTable(model);
+		TableColumn col_id=iBaseTable.getColumnModel().getColumn(0);
 		col_id.setPreferredWidth(20);
 		col_id.setMinWidth(5);
 		col_id.setMaxWidth(30);
-		scrollPane.setViewportView(uBaseTable);
+		scrollPane.setViewportView(iBaseTable);
 		
 		//为左侧table添加行选中事件
-		uBaseTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+		iBaseTable.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				if(!e.getValueIsAdjusting()){//鼠标释放
-					int row=uBaseTable.getSelectedRow();
+					int row=iBaseTable.getSelectedRow();
 					if(row<0){
 						row=0;//刷新时，可能出现失去焦点的情况，故始终默认选中第一行
-						uBaseTable.setRowSelectionInterval(0, 0);
+						iBaseTable.setRowSelectionInterval(0, 0);
 					}
 						
-					Long s=Long.parseLong(uBaseTable.getValueAt(row, 0)+"");
+					Long s=Long.parseLong(iBaseTable.getValueAt(row, 0)+"");
 //					String s1=uBaseTable.getValueAt(row, 1)+"";
 //					String s2=uBaseTable.getValueAt(row, 2)+"";
 					System.out.println("当前选中行"+row);
 					Constant.BASE_ID=s;
 					//加载数据
 					if(Constant.TAB_ABC.equals(Constant.TEST_DATA_A)){
-						table_ab.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
+						table_ab.setModel(ITestData.getITestData(Constant.BASE_ID, Constant.TAB_ABC));
 						
 					}if(Constant.TAB_ABC.equals(Constant.TEST_DATA_B)){
-						table_bc.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
+						table_bc.setModel(ITestData.getITestData(Constant.BASE_ID, Constant.TAB_ABC));
 					}if(Constant.TAB_ABC.equals(Constant.TEST_DATA_C)){
-						table_ca.setModel(UTestData.getUTestData(Constant.BASE_ID, Constant.TAB_ABC));
+						table_ca.setModel(ITestData.getITestData(Constant.BASE_ID, Constant.TAB_ABC));
 					}else {
-						loadUBaseInfo(Constant.BASE_ID);
+						loadIBaseInfo(Constant.BASE_ID);
 					}
 				}
 			}
 		});
 		//左侧表格默认选中第一行
-		uBaseTable.setRowSelectionInterval(0, 0);
+		iBaseTable.setRowSelectionInterval(0, 0);
 	}
 	
 	
@@ -1218,9 +1217,9 @@ public class IFrame extends JFrame {
 	 * 为基本信息区的textFile加载数据
 	 * @param baseId
 	 */
-	public void loadUBaseInfo(Long baseId){
+	public void loadIBaseInfo(Long baseId){
 		if(huMing!=null){//不为空时，表示frame已经初始化了jtextfield，否则会报错。
-			Map< String, String> map= UBaseInfo.getUBaseInfo(baseId);
+			Map< String, String> map= IBaseInfo.getIBaseInfo(baseId);
 			this.huMing.setText(map.get("huMing"));
 			this.huiLuMingCheng.setText(map.get("huiLuMingCheng"));
 			this.changMing_a.setText(map.get("changMing_a"));

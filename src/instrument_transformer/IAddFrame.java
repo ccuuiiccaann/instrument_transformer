@@ -63,7 +63,7 @@ public class IAddFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				setVisible(false);
-				MainFrame.uFrame.setVisible(true);
+				MainFrame.iFrame.setVisible(true);
 			}
 		});
 //		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -600,13 +600,13 @@ public class IAddFrame extends JFrame {
 				map.put("ceShiRen", ceShiRen.getText());
 				map.put("ceShiRiQi", ceShiRiQi.getText());
 				map.put("ceShiJieLun", ceShiJieLun.getText());
-				boolean b=UBaseInfo.addUBaseInfo(map);
+				boolean b=IBaseInfo.addIBaseInfo(map);
 				if(b){
 					JOptionPane.showMessageDialog(null, "保存成功。");
 					setVisible(false);
-					MainFrame.uFrame.setVisible(true);
-					if(MainFrame.uFrame.uBaseTable!=null){
-						MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+					MainFrame.iFrame.setVisible(true);
+					if(MainFrame.iFrame.iBaseTable!=null){
+						MainFrame.iFrame.iBaseTable.setModel(IBaseInfo.getITableData());
 					}
 				}else {
 					JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
@@ -624,7 +624,7 @@ public class IAddFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				setVisible(false);
-				MainFrame.uFrame.setVisible(true);
+				MainFrame.iFrame.setVisible(true);
 			}
 		});
 		GridBagConstraints gbc_cancelBtn = new GridBagConstraints();

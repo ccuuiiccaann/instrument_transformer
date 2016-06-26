@@ -20,6 +20,7 @@ public class MainFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public  static UFrame uFrame;
+	public  static IFrame iFrame;
 	public static MainFrame frame;
 	public static Connection conn;
 	/**
@@ -36,6 +37,11 @@ public class MainFrame extends JFrame {
 			uFrame=new UFrame();
 		}
 		uFrame.setVisible(false);
+		//初始化电流主frame并设置为不显示
+		if(iFrame==null){
+			iFrame=new IFrame();
+		}
+		iFrame.setVisible(false);
 		
 	}
 	public static void main(String[] args) {
@@ -88,28 +94,16 @@ public class MainFrame extends JFrame {
 		btnUTest.setBounds(34, 41, 141, 23);
 		getContentPane().add(btnUTest);
 		
-		JButton btnATest = new JButton("电流互感器");
-		btnATest.addMouseListener(new MouseAdapter() {
+		JButton btnITest = new JButton("电流互感器");
+		btnITest.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-//				try {
-//					Statement stmt=conn.createStatement();
-//					ResultSet rs = stmt.executeQuery("select * from u_base_info");
-//					String s="123a";
-//					while (rs.next()) {
-//						s=rs.getString(1);
-//					}
-//					JOptionPane.showConfirmDialog(null, s);
-//					rs.close();
-//					stmt.close();
-//				} catch (SQLException e1) {
-//					JOptionPane.showConfirmDialog(null, "error");
-//					e1.printStackTrace();
-//				}
+				frame.setVisible(false);
+				iFrame.setVisible(true);
 			}
 		});
-		btnATest.setBounds(264, 41, 132, 23);
-		getContentPane().add(btnATest);
+		btnITest.setBounds(264, 41, 132, 23);
+		getContentPane().add(btnITest);
 		
 		//初始化电压的frame
 	}

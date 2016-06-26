@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- * 电压，测试数据操作
+ * 电流，测试数据操作
  * @author cuican
  *
  */
@@ -22,7 +22,7 @@ public class ITestData {
 	 * @param tab_abc 选中的是哪个测试数据（a、b or c）
 	 * @return DefaultTableModel对象，作为Jtable实例化的参数
 	 */
-	public static DefaultTableModel getUTestData(Long baseId,String tab_abc){
+	public static DefaultTableModel getITestData(Long baseId,String tab_abc){
 		DefaultTableModel model=new DefaultTableModel();
 		Vector<Vector<String>> data=new Vector<>();//table的数据
 		Vector<String> column=new Vector<>();//table的列名
@@ -38,7 +38,7 @@ public class ITestData {
 		Connection conn=DBConnection.getInstance();
 		try {
 			Statement st=conn.createStatement();
-			String sql="select * from u_test_data where base_id="+baseId+" and deviation='"+tab_abc+"' ";
+			String sql="select * from i_test_data where base_id="+baseId+" and deviation='"+tab_abc+"' ";
 			System.out.println(sql);
 			ResultSet rs=st.executeQuery(sql);
 			while (rs.next()) {
@@ -96,13 +96,13 @@ public class ITestData {
 	}
 	
 	/**
-	 * 更新电压测试数据
+	 * 更新电流测试数据
 	 * @param model tab页表格的数据model
 	 * @param tab_abc 当前选中的是哪个tab
 	 * @param baseId 主记录id
 	 * @return  true成功，否则失败
 	 */
-	public static boolean updateUTestData(TableModel model,String tab_abc,Long baseId){
+	public static boolean updateITestData(TableModel model,String tab_abc,Long baseId){
 		Connection conn=DBConnection.getInstance();
 		try {
 			conn.setAutoCommit(false);
@@ -113,7 +113,7 @@ public class ITestData {
 			String value_100=(model.getValueAt(0, 3)==null)?"":model.getValueAt(0, 3)+"";
 			String value_120=(model.getValueAt(0, 4)==null)?"":model.getValueAt(0, 4)+"";
 			//满载-比差
-			String sql1="update u_test_data "
+			String sql1="update i_test_data "
 					+ "set value_20='"+value_20+"',value_50='"+value_50+"',"
 						+ "value_80='"+value_80+"',value_100='"+value_100+"',value_120='"+value_120+"' "
 					+ "where base_id="+baseId+" and deviation='"+tab_abc+"' "
@@ -124,7 +124,7 @@ public class ITestData {
 			value_80=(model.getValueAt(1, 2)==null)?"":model.getValueAt(1, 2)+"";
 			value_100=(model.getValueAt(1, 3)==null)?"":model.getValueAt(1, 3)+"";
 			value_120=(model.getValueAt(1, 4)==null)?"":model.getValueAt(1, 4)+"";
-			String sql2="update u_test_data "
+			String sql2="update i_test_data "
 					+ "set value_20='"+value_20+"',value_50='"+value_50+"',"
 					+ "value_80='"+value_80+"',value_100='"+value_100+"',value_120='"+value_120+"' "
 					+ "where base_id="+baseId+" and deviation='"+tab_abc+"' "
@@ -135,7 +135,7 @@ public class ITestData {
 			value_80=(model.getValueAt(2, 2)==null)?"":model.getValueAt(2, 2)+"";
 			value_100=(model.getValueAt(2, 3)==null)?"":model.getValueAt(2, 3)+"";
 			value_120=(model.getValueAt(2, 4)==null)?"":model.getValueAt(2, 4)+"";
-			String sql3="update u_test_data "
+			String sql3="update i_test_data "
 					+ "set value_20='"+value_20+"',value_50='"+value_50+"',"
 					+ "value_80='"+value_80+"',value_100='"+value_100+"',value_120='"+value_120+"' "
 					+ "where base_id="+baseId+" and deviation='"+tab_abc+"' "
@@ -146,7 +146,7 @@ public class ITestData {
 			value_80=(model.getValueAt(3, 2)==null)?"":model.getValueAt(3, 2)+"";
 			value_100=(model.getValueAt(3, 3)==null)?"":model.getValueAt(3, 3)+"";
 			value_120=(model.getValueAt(3, 4)==null)?"":model.getValueAt(3, 4)+"";
-			String sql4="update u_test_data "
+			String sql4="update i_test_data "
 					+ "set value_20='"+value_20+"',value_50='"+value_50+"',"
 					+ "value_80='"+value_80+"',value_100='"+value_100+"',value_120='"+value_120+"' "
 					+ "where base_id="+baseId+" and deviation='"+tab_abc+"' "

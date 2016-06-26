@@ -12,17 +12,17 @@ import java.util.Vector;
 import javax.swing.table.DefaultTableModel;
 
 /**
- * 电压，基本数据操作
+ * 电流，基本数据操作
  * @author cuican
  *
  */
 public class IBaseInfo {
 
 	/**
-	 * 电压，从数据库查询左侧table的数据
+	 * 电流，从数据库查询左侧table的数据
 	 * @return DefaultTableModel对象，作为Jtable实例化的参数
 	 */
-	public static DefaultTableModel getUTableData(){
+	public static DefaultTableModel getITableData(){
 		DefaultTableModel model=new DefaultTableModel();
 		Vector<Vector<String>> data=new Vector<>();//table的数据
 		Vector<String> column=new Vector<>();//table的列名
@@ -33,8 +33,8 @@ public class IBaseInfo {
 		try {
 			Statement st=conn.createStatement();
 			//access不能像mysql那样limit只支持类似于oracle的top
-			String sql="select top "+Constant.LIMIT+" id,certificate_no,test_date from u_base_info order by create_date desc ";
-			System.out.println("电压，为左侧table加载数据的sql："+sql);
+			String sql="select top "+Constant.LIMIT+" id,certificate_no,test_date from i_base_info order by create_date desc ";
+			System.out.println("电流，为左侧table加载数据的sql："+sql);
 			ResultSet rs=st.executeQuery(sql);
 			while (rs.next()) {
 				String id=rs.getString(1);
@@ -58,16 +58,16 @@ public class IBaseInfo {
 	}
 	
 	/**
-	 * 查询电压测试的基本信息
+	 * 查询电流测试的基本信息
 	 * @param baseId
 	 * @return HashMap,key为JTextField 变量名，value为该变量对应的值
 	 */
-	public static HashMap<String,String> getUBaseInfo(Long baseId){
+	public static HashMap<String,String> getIBaseInfo(Long baseId){
 		HashMap<String,String> map=new HashMap<>();
 		Connection conn=DBConnection.getInstance();
 		try {
 			Statement st=conn.createStatement();
-			String sql="select *  from u_base_info where id="+baseId+"";
+			String sql="select *  from i_base_info where id="+baseId+"";
 			ResultSet rs=st.executeQuery(sql);
 			while (rs.next()) {
 				String huMing=rs.getString("name");
@@ -131,19 +131,19 @@ public class IBaseInfo {
 	}
 	
 	/**
-	 * 插入电压基本信息数据，同时插入空的测试数据信息。这样在录入测试数据时，只需update即可
+	 * 插入电流基本信息数据，同时插入空的测试数据信息。这样在录入测试数据时，只需update即可
 	 * 两个插入操作是一个事务
 	 * @param map 键值对，key为JTextField 变量名，value为该变量对应的值
 	 * @return true成功，否则失败
 	 */
-	public static boolean addUBaseInfo(Map<String, String> map) {
+	public static boolean addIBaseInfo(Map<String, String> map) {
 		boolean result=false;
 		Connection conn=DBConnection.getInstance();
 		try {
 			conn.setAutoCommit(false);
 			Statement st=conn.createStatement();
 			//统计行数用来计算id
-			String countSql="select max(id) as c from u_base_info ";
+			String countSql="select max(id) as c from i_base_info ";
 			ResultSet rs=st.executeQuery(countSql);
 			Long count=0L;
 			while (rs.next()){
@@ -176,7 +176,7 @@ public class IBaseInfo {
 			String tester=map.get("ceShiRen");
 			String test_date=map.get("ceShiRiQi");
 			String conclusion=map.get("ceShiJieLun");//测试结论
-			String sql="insert into u_base_info "
+			String sql="insert into i_base_info "
 						+ "(id,name,loop,"
 						+ "factory_name_a,factory_name_b,factory_name_c,"
 						+ "model_a,model_b,model_c,"
@@ -195,7 +195,7 @@ public class IBaseInfo {
 						+ "'"+no_a+"','"+no_b+"','"+no_c+"',"
 						+ "'"+certificate_no+"','"+tester+"','"+test_date+"','"+conclusion+"','"+create_date+"'"
 						+ ") ";
-			System.out.println("新增电压基本信息：sql "+sql);
+			System.out.println("新增电流基本信息：sql "+sql);
 			st.executeUpdate(sql);
 			//插入测试数据,一组基础数据对应12条测试数据。
 			//12条数据是3个误差（ab，bc，ca）、满载+轻载（2种情况）、比差+角差（2种情况）的组合，3*2*2=12
@@ -205,11 +205,11 @@ public class IBaseInfo {
 			for (int i = 0; i < deviation.length; i++) {
 				for (int j = 0; j < sn_ln.length; j++) {
 					//比差
-					String sql1="insert into u_test_data(id,base_id,deviation,rate_error,sn_ln) "
+					String sql1="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln) "
 							+ "values "
 							+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[i]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[j]+"') ";
 					//角差
-					String sql2="insert into u_test_data(id,base_id,deviation,angle_error,sn_ln) "
+					String sql2="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln) "
 							+ "values "
 							+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[i]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[j]+"') ";//比差
 					System.out.println(sql1);
@@ -224,7 +224,7 @@ public class IBaseInfo {
 			st.close();
 			return true;
 		} catch (SQLException e) {
-			System.err.println("电压，新增出错，回滚！");
+			System.err.println("电流，新增出错，回滚！");
 			try {
 				conn.rollback();
 			} catch (SQLException e1) {
@@ -244,15 +244,15 @@ public class IBaseInfo {
 	}
 	
 	/**
-	 * 删除电压互感器的数据（基本信息+测试数据）。
+	 * 删除电流互感器的数据（基本信息+测试数据）。
 	 * 两个删除是一个事务
 	 * @param baseId 基本信息id
 	 * @return true成功，否则失败
 	 */
-	public static boolean delUData(Long baseId){
+	public static boolean delIData(Long baseId){
 		boolean result=false;
-		String sql1="delete from u_test_data where base_id="+baseId+"";
-		String sql2="delete from u_base_info where id="+baseId+"";
+		String sql1="delete from i_test_data where base_id="+baseId+"";
+		String sql2="delete from i_base_info where id="+baseId+"";
 		System.out.println("删除电压测试数据"+sql1);
 		System.out.println("删除电压基础数据"+sql2);
 		Connection conn=DBConnection.getInstance();
@@ -265,7 +265,7 @@ public class IBaseInfo {
 			st.close();
 			return true;
 		} catch (SQLException e) {
-			System.err.println("删除电压互感器数据出错！");
+			System.err.println("删除电流互感器数据出错！");
 			try {
 				System.out.println("事务回滚。");
 				conn.rollback();
@@ -286,12 +286,12 @@ public class IBaseInfo {
 	}
 	
 	/**
-	 * 更新电压的基本数据
+	 * 更新电流的基本数据
 	 * @param map 待更新的结果集，键值对形式，key为JTextField 变量名，value为该变量对应的值
 	 * @param baseId 被更新的记录的id
 	 * @return true成功，否则失败
 	 */
-	public static boolean updateUBaseData(Map<String,String> map,Long baseId){
+	public static boolean updateIBaseData(Map<String,String> map,Long baseId){
 		Connection conn=DBConnection.getInstance();
 		try {
 			Statement st=conn.createStatement();
@@ -321,7 +321,7 @@ public class IBaseInfo {
 			String tester=map.get("ceShiRen");
 			String test_date=map.get("ceShiRiQi");
 			String conclusion=map.get("ceShiJieLun");//测试结论
-			String sql="update u_base_info "
+			String sql="update i_base_info "
 						+ "set name='"+name+"',loop='"+loop+"',"
 						+ "factory_name_a='"+factory_name_a+"',factory_name_b='"+factory_name_b+"',factory_name_c='"+factory_name_c+"',"
 						+ "model_a='"+model_a+"',model_b='"+model_b+"',model_c='"+model_c+"',"
@@ -331,7 +331,7 @@ public class IBaseInfo {
 						+ "no_a='"+no_a+"',no_b='"+no_b+"',no_c='"+no_c+"',"
 						+ "certificate_no='"+certificate_no+"',tester='"+tester+"',test_date='"+test_date+"',conclusion='"+conclusion+"' "
 						+ "where id="+baseId;
-			System.out.println("编辑电压基本信息： "+sql);
+			System.out.println("编辑电流基本信息： "+sql);
 			st.executeUpdate(sql);
 			st.close();
 			return true;
