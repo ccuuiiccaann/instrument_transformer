@@ -2,7 +2,6 @@ package instrument_transformer;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 
 import javax.swing.JOptionPane;
 
@@ -48,11 +47,11 @@ public class DBConnection {
 			Class.forName("com.hxtt.sql.access.AccessDriver").newInstance();
 	        String url = "jdbc:Access:///"+mdbFilePath;
 	        conn = DriverManager.getConnection(url);
-	        /*            
+	        /*          
 			String strurl="jdbc:odbc:driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\VITest.mdb";  
 			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");  
 			conn=DriverManager.getConnection(strurl) ;
-	         */
+			*/
 		} catch (Exception e) {
 			e.printStackTrace();
 			JOptionPane.showConfirmDialog(null, "获取数据库连接失败。请确认"+mdbFilePath+"文件是否存在。");

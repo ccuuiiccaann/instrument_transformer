@@ -85,6 +85,7 @@ public class UFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public UFrame() {
+		setTitle("电压互感器测试数据管理");
 		init();
 		addWindowListener(new WindowAdapter() {
 			@Override

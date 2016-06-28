@@ -600,16 +600,18 @@ public class UAddFrame extends JFrame {
 				map.put("ceShiRen", ceShiRen.getText());
 				map.put("ceShiRiQi", ceShiRiQi.getText());
 				map.put("ceShiJieLun", ceShiJieLun.getText());
-				boolean b=UBaseInfo.addUBaseInfo(map);
-				if(b){
+				String b=UBaseInfo.addUBaseInfo(map);
+				if(Constant.SUCCESS.equals(b)){
 					JOptionPane.showMessageDialog(null, "保存成功。");
 					setVisible(false);
 					MainFrame.uFrame.setVisible(true);
 					if(MainFrame.uFrame.uBaseTable!=null){
 						MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
 					}
-				}else {
+				}else if(Constant.FAILED.equals(b)) {
 					JOptionPane.showMessageDialog(null, "保存失败！","错误",JOptionPane.ERROR_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, b,"警告",JOptionPane.WARNING_MESSAGE);
 				}
 			}
 		});

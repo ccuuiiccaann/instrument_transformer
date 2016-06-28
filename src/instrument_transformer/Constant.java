@@ -54,5 +54,14 @@ public class Constant {
 	 * 当前选中的tab是A、B、还是C。例如，选中的是A，则此变量值为A(即Constant.TEST_DATA_A)。
 	 */
 	public static String TAB_ABC="";
+	
+	/**
+	 * 成功
+	 */
+	public static String SUCCESS="1";
+	/**
+	 * 失败
+	 */
+	public static final String FAILED="0";
 
 }

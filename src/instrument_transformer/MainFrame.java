@@ -77,7 +77,7 @@ public class MainFrame extends JFrame {
 				System.exit(0);
 			}
 		});
-		setTitle("互感器测试");
+		setTitle("互感器测试数据管理软件");
 		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

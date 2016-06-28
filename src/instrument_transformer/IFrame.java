@@ -85,6 +85,7 @@ public class IFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public IFrame() {
+		setTitle("电流互感器测试数据管理");
 		init();
 		addWindowListener(new WindowAdapter() {
 			@Override

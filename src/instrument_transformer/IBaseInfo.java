@@ -136,8 +136,7 @@ public class IBaseInfo {
 	 * @param map 键值对，key为JTextField 变量名，value为该变量对应的值
 	 * @return true成功，否则失败
 	 */
-	public static boolean addIBaseInfo(Map<String, String> map) {
-		boolean result=false;
+	public static String addIBaseInfo(Map<String, String> map) {
 		Connection conn=DBConnection.getInstance();
 		try {
 			conn.setAutoCommit(false);
@@ -176,6 +175,21 @@ public class IBaseInfo {
 			String tester=map.get("ceShiRen");
 			String test_date=map.get("ceShiRiQi");
 			String conclusion=map.get("ceShiJieLun");//测试结论
+			
+			if(certificate_no==null || "".equals(certificate_no)){
+				return "证书编号不能为空！";
+			}
+			//校验证书编号是否存在
+			String check_sql="select count(*) as total from u_base_info where certificate_no='"+certificate_no+"' ";
+			ResultSet rs1=st.executeQuery(check_sql);
+			Long total=-1L;
+			while (rs1.next()){
+				total=rs1.getLong("total");
+			}
+			if(total>0){
+				return "证书编号已存在！";
+			}
+			
 			String sql="insert into i_base_info "
 						+ "(id,name,loop,"
 						+ "factory_name_a,factory_name_b,factory_name_c,"
@@ -222,7 +236,7 @@ public class IBaseInfo {
 			conn.commit();
 			rs.close();
 			st.close();
-			return true;
+			return Constant.SUCCESS;
 		} catch (SQLException e) {
 			System.err.println("电流，新增出错，回滚！");
 			try {
@@ -240,7 +254,7 @@ public class IBaseInfo {
 				e.printStackTrace();
 			}
 		}
-		return result;
+		return Constant.FAILED;
 	}
 	
 	/**
