@@ -10,10 +10,12 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -104,6 +106,25 @@ public class IFrame extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem menuItem = new JMenuItem("导入测试数据");
+		menuItem.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				System.out.println("--");
+				 JFileChooser jfc=new JFileChooser();  
+			        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );  
+			        jfc.showDialog(new JLabel(), "选择");  
+			        File file=jfc.getSelectedFile();  
+			        if(file.isDirectory()){  
+			            System.out.println("文件夹:"+file.getAbsolutePath());  
+			        }else if(file.isFile()){  
+			            System.out.println("文件:"+file.getAbsolutePath());  
+			        }  
+			        String filePath=file.getAbsolutePath();
+			        System.out.println(filePath); 
+			        String s=ImportUtil.ImportITestData(filePath);
+			        JOptionPane.showMessageDialog(null, s,"提示",JOptionPane.YES_OPTION);
+			}
+		});
 		mnNewMenu.add(menuItem);
 		
 		JMenuItem menuItem_1 = new JMenuItem("批量导入测试数据");
