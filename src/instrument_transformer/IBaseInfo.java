@@ -253,6 +253,7 @@ public class IBaseInfo {
 				System.err.println("setAutoCommit出错！");
 				e.printStackTrace();
 			}
+			
 		}
 		return Constant.FAILED;
 	}

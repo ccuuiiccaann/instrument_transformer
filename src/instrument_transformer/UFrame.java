@@ -106,8 +106,8 @@ public class UFrame extends JFrame {
 		JMenuItem menuItem = new JMenuItem("导入测试数据");
 		mnNewMenu.add(menuItem);
 		
-		JMenuItem menuItem_1 = new JMenuItem("批量导入测试数据");
-		mnNewMenu.add(menuItem_1);
+//		JMenuItem menuItem_1 = new JMenuItem("批量导入测试数据");
+//		mnNewMenu.add(menuItem_1);
 		
 		JMenu mnNewMenu_1 = new JMenu("导出报告");
 		menuBar.add(mnNewMenu_1);
