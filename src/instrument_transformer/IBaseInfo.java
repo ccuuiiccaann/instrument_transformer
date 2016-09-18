@@ -180,7 +180,7 @@ public class IBaseInfo {
 				return "证书编号不能为空！";
 			}
 			//校验证书编号是否存在
-			String check_sql="select count(*) as total from u_base_info where certificate_no='"+certificate_no+"' ";
+			String check_sql="select count(*) as total from i_base_info where certificate_no='"+certificate_no+"' ";
 			ResultSet rs1=st.executeQuery(check_sql);
 			Long total=-1L;
 			while (rs1.next()){

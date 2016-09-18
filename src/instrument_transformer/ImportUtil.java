@@ -45,25 +45,31 @@ public class ImportUtil {
 				int line = 0;// 行号
 				while ((lineTxt = bufferedReader.readLine()) != null) {
 					lineTxt = lineTxt.trim();
+					if("".equals(lineTxt))continue;
 					String[] pairs = lineTxt.split(":");
 					String key = pairs[0];
 					String value = pairs[1];
-					//如果是测试数据（以deviation开头的行），则:后面的都作为key的value
-					if("deviation".equals(key)){
+					//如果是测试数据（以deviation_开头的行），则:后面的都作为key的value
+					if(key.startsWith("deviation_")){
 						value="";
 						for (int i = 1; i < pairs.length; i++) {
 							value+=pairs[i]+":";
 						}
-						value=value.substring(0, value.length()-1);//去除最后的:
+						value=value.substring(0, value.length()-1);
 					}
 					System.out.println(key + "=" + value);
-					if (line == 0) {
+					if(line ==0){
+						if (!"type".equals(key) || !"I".equals(value)) {
+							return "文件内容有误，请重新选择。";
+						}
+					}
+					if (line == 1) {
 						if (!"BH".equals(key)) {
-							return "文件内容格式有误，请重新选择。";
+							return "文件内容有误，请重新选择。";
 						}
 					}
 					map.put(key, value);//将导入的数据存入map
-
+					line++;
 				}
 				read.close();
 			} else {
@@ -114,37 +120,37 @@ public class ImportUtil {
 				}
 				Long id=count+1;//计算id
 				String create_date=DateUtil.getCurDate();//当前时间
-				String name=map.get("huMing");
-				String loop=map.get("huiLuMingCheng");
-				String factory_name_a=map.get("changMing_a");
-				String factory_name_b=map.get("changMing_b");
-				String factory_name_c=map.get("changMing_c");
-				String model_a=map.get("xingShi_a");
-				String model_b=map.get("xingShi_b");
-				String model_c=map.get("xingShi_c");
-				String factory_no_a=map.get("changHao_a");
-				String factory_no_b=map.get("changHao_b");
-				String factory_no_c=map.get("changHao_c");
-				String volume=map.get("eDingRongLiang");//额定容量
-				String polarity=map.get("jiXing");//极性
-				String transformer_ratio=map.get("bianBi");//变比（变压比）
-				String correctly_level=map.get("zhunQueDengJi");//准确等级
-				String factory_date=map.get("chuChangNianYue");//出厂年月
-				String rated_voltage=map.get("dianYa");//电压（额定电压）
-				String frequency=map.get("pinLv");//频率
-				String no_a=map.get("juBianHao_a");
-				String no_b=map.get("juBianHao_b");
-				String no_c=map.get("juBianHao_c");
-				String certificate_no=map.get("zhengShuBianHao");//证书编号
-				String tester=map.get("ceShiRen");
-				String test_date=map.get("ceShiRiQi");
-				String conclusion=map.get("ceShiJieLun");//测试结论
+				String name=baseInfoMap.get("huMing");
+				String loop=baseInfoMap.get("huiLuMingCheng");
+				String factory_name_a=baseInfoMap.get("changMing_a");
+				String factory_name_b=baseInfoMap.get("changMing_b");
+				String factory_name_c=baseInfoMap.get("changMing_c");
+				String model_a=baseInfoMap.get("xingShi_a");
+				String model_b=baseInfoMap.get("xingShi_b");
+				String model_c=baseInfoMap.get("xingShi_c");
+				String factory_no_a=baseInfoMap.get("changHao_a");
+				String factory_no_b=baseInfoMap.get("changHao_b");
+				String factory_no_c=baseInfoMap.get("changHao_c");
+				String volume=baseInfoMap.get("eDingRongLiang");//额定容量
+				String polarity=baseInfoMap.get("jiXing");//极性
+				String transformer_ratio=baseInfoMap.get("bianBi");//变比（变压比）
+				String correctly_level=baseInfoMap.get("zhunQueDengJi");//准确等级
+				String factory_date=baseInfoMap.get("chuChangNianYue");//出厂年月
+				String rated_voltage=baseInfoMap.get("dianYa");//电压（额定电压）
+				String frequency=baseInfoMap.get("pinLv");//频率
+				String no_a=baseInfoMap.get("juBianHao_a");
+				String no_b=baseInfoMap.get("juBianHao_b");
+				String no_c=baseInfoMap.get("juBianHao_c");
+				String certificate_no=baseInfoMap.get("zhengShuBianHao");//证书编号
+				String tester=baseInfoMap.get("ceShiRen");
+				String test_date=baseInfoMap.get("ceShiRiQi");
+				String conclusion=baseInfoMap.get("ceShiJieLun");//测试结论
 				
 				if(certificate_no==null || "".equals(certificate_no)){
 					return "证书编号不能为空！";
 				}
 				//校验证书编号是否存在
-				String check_sql="select count(*) as total from u_base_info where certificate_no='"+certificate_no+"' ";
+				String check_sql="select count(*) as total from i_base_info where certificate_no='"+certificate_no+"' ";
 				ResultSet rs1=st.executeQuery(check_sql);
 				Long total=-1L;
 				while (rs1.next()){
@@ -180,37 +186,130 @@ public class ImportUtil {
 				String[] deviation={Constant.TEST_DATA_A,Constant.TEST_DATA_B,Constant.TEST_DATA_C};//ab、bc、ca误差
 				String[] sn_ln={Constant.SN,Constant.LN};//满载、轻载
 				System.out.println("插入电压测试数据:");
-				String value_20="";
-				String value_50="";
-				String value_80="";
-				String value_100="";
-				String value_120="";
-				for (int i = 0; i < deviation.length; i++) {
-					for (int j = 0; j < sn_ln.length; j++) {
-						//比差
-						String sql1="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln,"
-								+ "value_20,value_50,value_80,value_100,value_120) "
-								+ "values "
-								+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[i]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[j]+"'),"
-									+ " ";
-						//角差
-						String sql2="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln, "
-								+ "value_20,value_50,value_80,value_100,value_120) "
-								+ "values "
-								+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[i]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[j]+"') "//比差
-								+ " ";
-						System.out.println(sql1);
-						System.out.println(sql2);
-						st.executeUpdate(sql1);
-						st.executeUpdate(sql2);
-						
-					}
-				}
+				
+				String deviation_a_sn=map.get("deviation_a_sn");
+				String[] data_a_sn=deviation_a_sn.split(",");
+				String[] bicha_a_sn=data_a_sn[0].split(":")[1].split("#");
+				String[] jiaocha_a_sn=data_a_sn[1].split(":")[1].split("#");
+				
+				String deviation_a_ln=map.get("deviation_a_ln");
+				String[] data_a_ln=deviation_a_ln.split(",");
+				String[] bicha_a_ln=data_a_ln[0].split(":")[1].split("#");
+				String[] jiaocha_a_ln=data_a_ln[1].split(":")[1].split("#");
+				
+				String deviation_b_sn=map.get("deviation_b_sn");
+				String[] data_b_sn=deviation_b_sn.split(",");
+				String[] bicha_b_sn=data_b_sn[0].split(":")[1].split("#");
+				String[] jiaocha_b_sn=data_b_sn[1].split(":")[1].split("#");
+				
+				String deviation_b_ln=map.get("deviation_b_ln");
+				String[] data_b_ln=deviation_b_ln.split(",");
+				String[] bicha_b_ln=data_b_ln[0].split(":")[1].split("#");
+				String[] jiaocha_b_ln=data_b_ln[1].split(":")[1].split("#");
+				
+				String deviation_c_sn=map.get("deviation_c_sn");
+				String[] data_c_sn=deviation_c_sn.split(",");
+				String[] bicha_c_sn=data_c_sn[0].split(":")[1].split("#");
+				String[] jiaocha_c_sn=data_c_sn[1].split(":")[1].split("#");
+				
+				String deviation_c_ln=map.get("deviation_c_ln");
+				String[] data_c_ln=deviation_c_ln.split(",");
+				String[] bicha_c_ln=data_c_ln[0].split(":")[1].split("#");
+				String[] jiaocha_c_ln=data_c_ln[1].split(":")[1].split("#");
+				
+				//a-满载-比差
+				String sql1="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln,"
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[0]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[0]+"',"
+							+ "'"+bicha_a_sn[0]+"','"+bicha_a_sn[1]+"','"+bicha_a_sn[2]+"','"+bicha_a_sn[3]+"','"+bicha_a_sn[4]+"') ";
+				//a-满载-角差
+				String sql2="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln, "
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[0]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[0]+"', "
+						+ "'"+jiaocha_a_sn[0]+"','"+jiaocha_a_sn[1]+"','"+jiaocha_a_sn[2]+"','"+jiaocha_a_sn[3]+"','"+jiaocha_a_sn[4]+"') ";
+				//a-轻载-比差
+				String sql3="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln,"
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[0]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[1]+"',"
+							+ "'"+bicha_a_ln[0]+"','"+bicha_a_ln[1]+"','"+bicha_a_ln[2]+"','"+bicha_a_ln[3]+"','"+bicha_a_ln[4]+"') ";
+				//a-轻载-角差
+				String sql4="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln, "
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[0]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[1]+"', "
+						+ "'"+jiaocha_a_ln[0]+"','"+jiaocha_a_ln[1]+"','"+jiaocha_a_ln[2]+"','"+jiaocha_a_ln[3]+"','"+jiaocha_a_ln[4]+"') ";
+				
+				
+				//b-满载-比差
+				String sql5="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln,"
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[1]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[0]+"',"
+						+ "'"+bicha_b_sn[0]+"','"+bicha_b_sn[1]+"','"+bicha_b_sn[2]+"','"+bicha_b_sn[3]+"','"+bicha_b_sn[4]+"') ";
+				//b-满载-角差
+				String sql6="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln, "
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[1]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[0]+"', "
+						+ "'"+jiaocha_b_sn[0]+"','"+jiaocha_b_sn[1]+"','"+jiaocha_b_sn[2]+"','"+jiaocha_b_sn[3]+"','"+jiaocha_b_sn[4]+"') ";
+				//b-轻载-比差
+				String sql7="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln,"
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[1]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[1]+"',"
+						+ "'"+bicha_b_ln[0]+"','"+bicha_b_ln[1]+"','"+bicha_b_ln[2]+"','"+bicha_b_ln[3]+"','"+bicha_b_ln[4]+"') ";
+				//b-轻载-角差
+				String sql8="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln, "
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[1]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[1]+"', "
+						+ "'"+jiaocha_b_ln[0]+"','"+jiaocha_b_ln[1]+"','"+jiaocha_b_ln[2]+"','"+jiaocha_b_ln[3]+"','"+jiaocha_b_ln[4]+"') ";
+				
+				//c-满载-比差
+				String sql9="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln,"
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[2]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[0]+"',"
+						+ "'"+bicha_c_sn[0]+"','"+bicha_c_sn[1]+"','"+bicha_c_sn[2]+"','"+bicha_c_sn[3]+"','"+bicha_c_sn[4]+"') ";
+				//c-满载-角差
+				String sql10="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln, "
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[2]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[0]+"', "
+						+ "'"+jiaocha_c_sn[0]+"','"+jiaocha_c_sn[1]+"','"+jiaocha_c_sn[2]+"','"+jiaocha_c_sn[3]+"','"+jiaocha_c_sn[4]+"') ";
+				//c-轻载-比差
+				String sql11="insert into i_test_data(id,base_id,deviation,rate_error,sn_ln,"
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[2]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[1]+"',"
+						+ "'"+bicha_c_ln[0]+"','"+bicha_c_ln[1]+"','"+bicha_c_ln[2]+"','"+bicha_c_ln[3]+"','"+bicha_c_ln[4]+"') ";
+				//c-轻载-角差
+				String sql12="insert into i_test_data(id,base_id,deviation,angle_error,sn_ln, "
+						+ "value_20,value_50,value_80,value_100,value_120) "
+						+ "values "
+						+ "('"+UUID.randomUUID().toString()+"',"+id+",'"+deviation[2]+"','"+Constant.RATE_OR_ANGLE+"','"+sn_ln[1]+"', "
+						+ "'"+jiaocha_c_ln[0]+"','"+jiaocha_c_ln[1]+"','"+jiaocha_c_ln[2]+"','"+jiaocha_c_ln[3]+"','"+jiaocha_c_ln[4]+"') ";
+				
+				st.executeUpdate(sql1);
+				st.executeUpdate(sql2);
+				st.executeUpdate(sql3);
+				st.executeUpdate(sql4);
+				st.executeUpdate(sql5);
+				st.executeUpdate(sql6);
+				st.executeUpdate(sql7);
+				st.executeUpdate(sql8);
+				st.executeUpdate(sql9);
+				st.executeUpdate(sql10);
+				st.executeUpdate(sql11);
+				st.executeUpdate(sql12);
 				conn.commit();
 				rs.close();
 				st.close();
-				return Constant.SUCCESS;
-			} catch (SQLException e) {
+				return "导入成功。";
+			} catch (Exception e) {
 				System.err.println("电流，新增出错，回滚！");
 				try {
 					conn.rollback();

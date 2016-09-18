@@ -122,7 +122,7 @@ public class IFrame extends JFrame {
 			        String filePath=file.getAbsolutePath();
 			        System.out.println(filePath); 
 			        String s=ImportUtil.ImportITestData(filePath);
-			        JOptionPane.showMessageDialog(null, s,"提示",JOptionPane.YES_OPTION);
+			        JOptionPane.showMessageDialog(null, s);
 			}
 		});
 		mnNewMenu.add(menuItem);
