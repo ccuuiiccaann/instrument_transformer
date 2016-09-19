@@ -123,6 +123,9 @@ public class IFrame extends JFrame {
 			        System.out.println(filePath); 
 			        String s=ImportUtil.ImportITestData(filePath);
 			        JOptionPane.showMessageDialog(null, s);
+			        if(MainFrame.iFrame.iBaseTable!=null){
+						MainFrame.iFrame.iBaseTable.setModel(IBaseInfo.getITableData());
+					}
 			}
 		});
 		mnNewMenu.add(menuItem);
