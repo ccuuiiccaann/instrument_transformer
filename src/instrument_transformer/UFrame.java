@@ -109,23 +109,19 @@ public class UFrame extends JFrame {
 		menuItem.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseReleased(MouseEvent e) {
-				System.out.println("--");
 				 JFileChooser jfc=new JFileChooser();  
 			        jfc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES );  
 			        jfc.showDialog(new JLabel(), "选择");  
 			        File file=jfc.getSelectedFile();  
-			        if(file.isDirectory()){  
-			            System.out.println("文件夹:"+file.getAbsolutePath());  
-			        }else if(file.isFile()){  
-			            System.out.println("文件:"+file.getAbsolutePath());  
-			        }  
-			        String filePath=file.getAbsolutePath();
-			        System.out.println(filePath); 
-			        String s=ImportUtil.ImportUTestData(filePath);
-			        JOptionPane.showMessageDialog(null, s);
-			        if(MainFrame.uFrame.uBaseTable!=null){
-						MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
-					}
+			        if(file!=null){
+			        	String filePath=file.getAbsolutePath();
+			        	System.out.println(filePath); 
+			        	String s=ImportUtil.ImportUTestData(filePath);
+			        	JOptionPane.showMessageDialog(null, s);
+			        	if(MainFrame.uFrame.uBaseTable!=null){
+			        		MainFrame.uFrame.uBaseTable.setModel(UBaseInfo.getUTableData());
+			        	}
+			        }
 			}
 		});
 		mnNewMenu.add(menuItem);
@@ -137,6 +133,16 @@ public class UFrame extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmword = new JMenuItem("导出数据到word模板");
+		mntmword.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(Constant.BASE_ID==null || Constant.BASE_ID==-1){
+					JOptionPane.showMessageDialog(null, "请在左侧表格中选择需要导出的数据。");
+				}else {
+					ExportUtil.exportU(Constant.BASE_ID);
+				}
+			}
+		});
 		mnNewMenu_1.add(mntmword);
 		
 		JButton button_add = new JButton("新增");
