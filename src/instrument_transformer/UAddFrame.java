@@ -501,7 +501,7 @@ public class UAddFrame extends JFrame {
 		panel_base.add(pinLv, gbc_pinLv);
 		pinLv.setColumns(10);
 		
-		JLabel lblNewLabel = new JLabel("证书编号");
+		JLabel lblNewLabel = new JLabel("测试编号");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
 		gbc_lblNewLabel.gridwidth = 2;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);

@@ -142,24 +142,24 @@ public class ImportUtil {
 				String no_a=baseInfoMap.get("juBianHao_a");
 				String no_b=baseInfoMap.get("juBianHao_b");
 				String no_c=baseInfoMap.get("juBianHao_c");
-				String certificate_no=baseInfoMap.get("zhengShuBianHao");//证书编号
+				String certificate_no=baseInfoMap.get("zhengShuBianHao");//测试编号
 				String tester=baseInfoMap.get("ceShiRen");
 				String test_date=baseInfoMap.get("ceShiRiQi");
 				String conclusion=baseInfoMap.get("ceShiJieLun");//测试结论
 				
 				if(certificate_no==null || "".equals(certificate_no)){
-					return "证书编号不能为空！";
+					return "测试编号不能为空！";
 				}
-				//校验证书编号是否存在
-				String check_sql="select count(*) as total from i_base_info where certificate_no='"+certificate_no+"' ";
-				ResultSet rs1=st.executeQuery(check_sql);
-				Long total=-1L;
-				while (rs1.next()){
-					total=rs1.getLong("total");
-				}
-				if(total>0){
-					return "证书编号已存在！";
-				}
+				//校验测试编号是否存在
+//				String check_sql="select count(*) as total from i_base_info where certificate_no='"+certificate_no+"' ";
+//				ResultSet rs1=st.executeQuery(check_sql);
+//				Long total=-1L;
+//				while (rs1.next()){
+//					total=rs1.getLong("total");
+//				}
+//				if(total>0){
+//					return "测试编号已存在！";
+//				}
 				
 				String sql="insert into i_base_info "
 							+ "(id,name,loop,"
@@ -457,24 +457,24 @@ public class ImportUtil {
 				String no_a=baseInfoMap.get("juBianHao_a");
 				String no_b=baseInfoMap.get("juBianHao_b");
 				String no_c=baseInfoMap.get("juBianHao_c");
-				String certificate_no=baseInfoMap.get("zhengShuBianHao");//证书编号
+				String certificate_no=baseInfoMap.get("zhengShuBianHao");//测试编号
 				String tester=baseInfoMap.get("ceShiRen");
 				String test_date=baseInfoMap.get("ceShiRiQi");
 				String conclusion=baseInfoMap.get("ceShiJieLun");//测试结论
 				
 				if(certificate_no==null || "".equals(certificate_no)){
-					return "证书编号不能为空！";
+					return "测试编号不能为空！";
 				}
-				//校验证书编号是否存在
-				String check_sql="select count(*) as total from u_base_info where certificate_no='"+certificate_no+"' ";
-				ResultSet rs1=st.executeQuery(check_sql);
-				Long total=-1L;
-				while (rs1.next()){
-					total=rs1.getLong("total");
-				}
-				if(total>0){
-					return "证书编号已存在！";
-				}
+				//校验测试编号是否存在
+//				String check_sql="select count(*) as total from u_base_info where certificate_no='"+certificate_no+"' ";
+//				ResultSet rs1=st.executeQuery(check_sql);
+//				Long total=-1L;
+//				while (rs1.next()){
+//					total=rs1.getLong("total");
+//				}
+//				if(total>0){
+//					return "测试编号已存在！";
+//				}
 				
 				String sql="insert into u_base_info "
 						+ "(id,name,loop,"
