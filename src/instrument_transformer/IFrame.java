@@ -35,6 +35,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
+import javax.swing.event.MenuKeyListener;
+import javax.swing.event.MenuKeyEvent;
 
 public class IFrame extends JFrame {
 
@@ -137,6 +139,17 @@ public class IFrame extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmword = new JMenuItem("导出数据到word模板");
+		mntmword.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseReleased(MouseEvent e) {
+				if(Constant.BASE_ID==null || Constant.BASE_ID==-1){
+					JOptionPane.showMessageDialog(null, "请在左侧表格中选择需要导出的数据。");
+				}else {
+					String s=ExportUtil.exportI(Constant.BASE_ID);
+					JOptionPane.showMessageDialog(null, s);
+				}
+			}
+		});
 		mnNewMenu_1.add(mntmword);
 		
 		JButton button_add = new JButton("新增");
