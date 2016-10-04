@@ -66,6 +66,7 @@ public class ExportUtil {
 	 */
 	private static Map<String,String> getUExportData(Long baseId,String deviation) {
 		Map<String,String> map=new HashMap<>();
+		map.put("deviation", deviation);
 		try {
 			Connection conn=DBConnection.getInstance();
 			conn.setAutoCommit(false);
