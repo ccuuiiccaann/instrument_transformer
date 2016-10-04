@@ -139,7 +139,8 @@ public class UFrame extends JFrame {
 				if(Constant.BASE_ID==null || Constant.BASE_ID==-1){
 					JOptionPane.showMessageDialog(null, "请在左侧表格中选择需要导出的数据。");
 				}else {
-					ExportUtil.exportU(Constant.BASE_ID);
+					String s=ExportUtil.exportU(Constant.BASE_ID);
+					JOptionPane.showMessageDialog(null, s);
 				}
 			}
 		});

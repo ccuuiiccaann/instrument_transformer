@@ -20,7 +20,7 @@ public class ExportUtil {
 	/**
 	 * 导出电压数据
 	 */
-	public static void exportU(Long baseId) {
+	public static String  exportU(Long baseId) {
 		try {
 			String templatePath = System.getProperty("user.dir");
 			File templete = new File(templatePath);
@@ -32,32 +32,77 @@ public class ExportUtil {
 			configuration.setDirectoryForTemplateLoading(templete);// FTL文件所存在的位置
 			Template t = null;
 			t = configuration.getTemplate("Utemplate.ftl"); // 文件名
-			File dir = new File("C:/测试报告");
+			File dir = new File("C:/测试报告/"+baseId);
 			if (!dir.exists() && !dir.isDirectory()) {
 				dir.mkdirs();
 			}
-			File outFileA = new File(dir + "/"+baseId+"_"+Constant.TEST_DATA_A+".doc");
+			File outFileA = new File(dir + "/"+Constant.TEST_DATA_A+".doc");
 			outFileA.createNewFile();
 			Writer out = null;
 			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileA)));
 			t.process(dataMapA, out);
 			
-			File outFileB = new File(dir + "/"+baseId+"_"+Constant.TEST_DATA_B+".doc");
+			File outFileB = new File(dir + "/"+Constant.TEST_DATA_B+".doc");
 			outFileB.createNewFile();
 			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileB)));
 			t.process(dataMapB, out);
 			
-			File outFileC = new File(dir + "/"+baseId+"_"+Constant.TEST_DATA_C+".doc");
+			File outFileC = new File(dir + "/"+Constant.TEST_DATA_C+".doc");
 			outFileC.createNewFile();
 			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileC)));
 			t.process(dataMapC, out);
 			out.close();
 			
+			return "导出成功。导出文件在文件夹["+dir.getPath()+"]中。";
 		} catch (Exception e) {
 			e.printStackTrace();
+			return "导出失败！";
 		} 
 	}
 
+	/**
+	 * 导出电流数据
+	 */
+	public static String  exportI(Long baseId) {
+		try {
+			String templatePath = System.getProperty("user.dir");
+			File templete = new File(templatePath);
+			Configuration configuration = new Configuration();
+			configuration.setDefaultEncoding("UTF-8");
+			Map<String, String> dataMapA =getUExportData(baseId,Constant.TEST_DATA_A);
+			Map<String, String> dataMapB =getUExportData(baseId,Constant.TEST_DATA_B);
+			Map<String, String> dataMapC =getUExportData(baseId,Constant.TEST_DATA_C);
+			configuration.setDirectoryForTemplateLoading(templete);// FTL文件所存在的位置
+			Template t = null;
+			t = configuration.getTemplate("Itemplate.ftl"); // 文件名
+			File dir = new File("C:/测试报告/"+baseId);
+			if (!dir.exists() && !dir.isDirectory()) {
+				dir.mkdirs();
+			}
+			File outFileA = new File(dir + "/"+Constant.TEST_DATA_A+".doc");
+			outFileA.createNewFile();
+			Writer out = null;
+			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileA)));
+			t.process(dataMapA, out);
+			
+			File outFileB = new File(dir + "/"+Constant.TEST_DATA_B+".doc");
+			outFileB.createNewFile();
+			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileB)));
+			t.process(dataMapB, out);
+			
+			File outFileC = new File(dir + "/"+Constant.TEST_DATA_C+".doc");
+			outFileC.createNewFile();
+			out = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(outFileC)));
+			t.process(dataMapC, out);
+			out.close();
+			
+			return "导出成功。导出文件在文件夹["+dir.getPath()+"]中。";
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "导出失败！";
+		} 
+	}
+	
 	/**
 	 * 获取待导出的数据
 	 * @param baseId 主记录id
