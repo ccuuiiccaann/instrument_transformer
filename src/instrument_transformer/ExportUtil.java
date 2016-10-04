@@ -279,11 +279,11 @@ public class ExportUtil {
 					String rate_sn_80=rs1.getString("value_80");
 					String rate_sn_100=rs1.getString("value_100");
 					String rate_sn_120=rs1.getString("value_120");
-					map.put(i+"_"+"rate_sn_20", rate_sn_20);
-					map.put(i+"_"+"rate_sn_50", rate_sn_50);
-					map.put(i+"_"+"rate_sn_80", rate_sn_80);
-					map.put(i+"_"+"rate_sn_100", rate_sn_100);
-					map.put(i+"_"+"rate_sn_120", rate_sn_120);
+					map.put("rate_sn_20"+"_"+i, rate_sn_20);
+					map.put("rate_sn_50"+"_"+i, rate_sn_50);
+					map.put("rate_sn_80"+"_"+i, rate_sn_80);
+					map.put("rate_sn_100"+"_"+i, rate_sn_100);
+					map.put("rate_sn_120"+"_"+i, rate_sn_120);
 				}
 				rs1.close();
 				
@@ -294,11 +294,11 @@ public class ExportUtil {
 					String angle_sn_80=rs2.getString("value_80");
 					String angle_sn_100=rs2.getString("value_100");
 					String angle_sn_120=rs2.getString("value_120");
-					map.put(i+"_"+"angle_sn_20", angle_sn_20);
-					map.put(i+"_"+"angle_sn_50", angle_sn_50);
-					map.put(i+"_"+"angle_sn_80", angle_sn_80);
-					map.put(i+"_"+"angle_sn_100", angle_sn_100);
-					map.put(i+"_"+"angle_sn_120", angle_sn_120);
+					map.put("angle_sn_20"+"_"+i, angle_sn_20);
+					map.put("angle_sn_50"+"_"+i, angle_sn_50);
+					map.put("angle_sn_80"+"_"+i, angle_sn_80);
+					map.put("angle_sn_100"+"_"+i, angle_sn_100);
+					map.put("angle_sn_120"+"_"+i, angle_sn_120);
 				}
 				rs2.close();
 				
@@ -309,11 +309,11 @@ public class ExportUtil {
 					String rate_ln_80=rs3.getString("value_80");
 					String rate_ln_100=rs3.getString("value_100");
 					String rate_ln_120=rs3.getString("value_120");
-					map.put(i+"_"+"rate_ln_20", rate_ln_20);
-					map.put(i+"_"+"rate_ln_50", rate_ln_50);
-					map.put(i+"_"+"rate_ln_80", rate_ln_80);
-					map.put(i+"_"+"rate_ln_100", rate_ln_100);
-					map.put(i+"_"+"rate_ln_120", rate_ln_120);
+					map.put("rate_ln_20"+"_"+i, rate_ln_20);
+					map.put("rate_ln_50"+"_"+i, rate_ln_50);
+					map.put("rate_ln_80"+"_"+i, rate_ln_80);
+					map.put("rate_ln_100"+"_"+i, rate_ln_100);
+					map.put("rate_ln_120"+"_"+i, rate_ln_120);
 				}
 				rs3.close();
 				
@@ -324,11 +324,11 @@ public class ExportUtil {
 					String angle_ln_80=rs4.getString("value_80");
 					String angle_ln_100=rs4.getString("value_100");
 					String angle_ln_120=rs4.getString("value_120");
-					map.put(i+"_"+"angle_ln_20", angle_ln_20);
-					map.put(i+"_"+"angle_ln_50", angle_ln_50);
-					map.put(i+"_"+"angle_ln_80", angle_ln_80);
-					map.put(i+"_"+"angle_ln_100", angle_ln_100);
-					map.put(i+"_"+"angle_ln_120", angle_ln_120);
+					map.put("angle_ln_20"+"_"+i, angle_ln_20);
+					map.put("angle_ln_50"+"_"+i, angle_ln_50);
+					map.put("angle_ln_80"+"_"+i, angle_ln_80);
+					map.put("angle_ln_100"+"_"+i, angle_ln_100);
+					map.put("angle_ln_120"+"_"+i, angle_ln_120);
 				}
 				rs4.close();
 			}
@@ -336,35 +336,35 @@ public class ExportUtil {
 			rs.close();
 			st.close();
 			//判断离3组数据还缺多少数据，需要把缺的数据置为空，否则导出的word里面就会有$开头的表达式
-			for (int i = count; i < 3; i++) {
-				map.put(i+"_"+"rate_sn_20", "");
-				map.put(i+"_"+"rate_sn_50", "");
-				map.put(i+"_"+"rate_sn_80", "");
-				map.put(i+"_"+"rate_sn_100", "");
-				map.put(i+"_"+"rate_sn_120", "");
+			for (int i = ids.size(); i < 3; i++) {
+				map.put("rate_sn_20"+"_"+i, "");
+				map.put("rate_sn_50"+"_"+i, "");
+				map.put("rate_sn_80"+"_"+i, "");
+				map.put("rate_sn_100"+"_"+i, "");
+				map.put("rate_sn_120"+"_"+i, "");
 				
-				map.put(i+"_"+"angle_sn_20", "");
-				map.put(i+"_"+"angle_sn_50", "");
-				map.put(i+"_"+"angle_sn_80", "");
-				map.put(i+"_"+"angle_sn_100", "");
-				map.put(i+"_"+"angle_sn_120", "");
+				map.put("angle_sn_20"+"_"+i, "");
+				map.put("angle_sn_50"+"_"+i, "");
+				map.put("angle_sn_80"+"_"+i, "");
+				map.put("angle_sn_100"+"_"+i, "");
+				map.put("angle_sn_120"+"_"+i, "");
 				
-				map.put(i+"_"+"rate_ln_20", "");
-				map.put(i+"_"+"rate_ln_50", "");
-				map.put(i+"_"+"rate_ln_80", "");
-				map.put(i+"_"+"rate_ln_100", "");
-				map.put(i+"_"+"rate_ln_120", "");
+				map.put("rate_ln_20"+"_"+i, "");
+				map.put("rate_ln_50"+"_"+i, "");
+				map.put("rate_ln_80"+"_"+i, "");
+				map.put("rate_ln_100"+"_"+i, "");
+				map.put("rate_ln_120"+"_"+i, "");
 				
-				map.put(i+"_"+"angle_ln_20", "");
-				map.put(i+"_"+"angle_ln_50", "");
-				map.put(i+"_"+"angle_ln_80", "");
-				map.put(i+"_"+"angle_ln_100", "");
-				map.put(i+"_"+"angle_ln_120", "");
+				map.put("angle_ln_20"+"_"+i, "");
+				map.put("angle_ln_50"+"_"+i, "");
+				map.put("angle_ln_80"+"_"+i, "");
+				map.put("angle_ln_100"+"_"+i, "");
+				map.put("angle_ln_120"+"_"+i, "");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		System.out.println(map.get("_rate_sn_20"));
+		System.out.println(map.get("rate_sn_20_0"));
 		return map;
 	}
 
