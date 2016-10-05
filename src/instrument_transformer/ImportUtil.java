@@ -20,6 +20,7 @@ import java.util.UUID;
  */
 public class ImportUtil {
 
+	private static BufferedReader bufferedReader;
 	/**
 	 * 导入一组电流测试数据
 	 * 
@@ -40,7 +41,7 @@ public class ImportUtil {
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				InputStreamReader read = new InputStreamReader(
 						new FileInputStream(file), encoding);// 考虑到编码格式
-				BufferedReader bufferedReader = new BufferedReader(read);
+				bufferedReader = new BufferedReader(read);
 				String lineTxt = null;
 				int line = 0;// 行号
 				while ((lineTxt = bufferedReader.readLine()) != null) {
@@ -355,7 +356,7 @@ public class ImportUtil {
 			if (file.isFile() && file.exists()) { // 判断文件是否存在
 				InputStreamReader read = new InputStreamReader(
 						new FileInputStream(file), encoding);// 考虑到编码格式
-				BufferedReader bufferedReader = new BufferedReader(read);
+				 bufferedReader = new BufferedReader(read);
 				String lineTxt = null;
 				int line = 0;// 行号
 				while ((lineTxt = bufferedReader.readLine()) != null) {

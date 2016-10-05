@@ -1,9 +1,5 @@
 package instrument_transformer;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
@@ -35,35 +31,18 @@ public class DBConnection {
 	 * 重写构造方法，并设为私有的。
 	 */
 	private DBConnection(){
-		String mdbFilePath="";
-		/*
-		String path=System.getProperty("java.class.path");
-		String[] s=path.split("\\\\");
-		for (int i = 0; i < s.length-1; i++) {
-			mdbFilePath+=s[i]+"\\";
-		}
-		 */
-		mdbFilePath+="VITest.mdb";//数据库文件名不能更改。
-//		System.out.println(mdbFilePath);
-//		JOptionPane.showConfirmDialog(null, mdbFilePath);
-//		mdbFilePath="C:\\Users\\cuican\\Desktop\\互感器校验程序\\VITest.mdb";//打包后需要注释掉，否则数据库文件路径不对。
-		mdbFilePath="C:/VITest.mdb";//打包后需要注释掉，否则数据库文件路径不对。
+		String mdbFilePath=System.getProperty("java.class.path");
+		String[] s=mdbFilePath.split("main\\.jar");
+		mdbFilePath=s[0]+"/VITest.mdb";//数据库文件名不能更改。
 		try {
-			
 			Class.forName("com.hxtt.sql.access.AccessDriver").newInstance();
 	        String url = "jdbc:Access:///"+mdbFilePath;
 	        conn = DriverManager.getConnection(url);
-	        /*          
-			String strurl="jdbc:odbc:driver={Microsoft Access Driver (*.mdb)};DBQ=C:\\VITest.mdb";  
-			Class.forName("sun.jdbc.odbc.JdbcOdbcDriver");  
-			conn=DriverManager.getConnection(strurl) ;
-			*/
 		} catch (Exception e) {
 			e.printStackTrace();
-			JOptionPane.showConfirmDialog(null, "获取数据库连接失败。请确认"+mdbFilePath+"文件是否存在。");
-			
+			JOptionPane.showMessageDialog(null, "获取数据库连接失败。请确认"+mdbFilePath+"文件是否存在。");
+			System.exit(0);
 		}
-		
 	}
 	/* 
 	 * 重写clone方法，防止产生新的实例
@@ -72,28 +51,5 @@ public class DBConnection {
 	public Connection clone() {
 		return getInstance();
 	}
-	public static void main(String[] args) {
-//				try {
-//					String path=System.getProperty("java.class.path");
-//					Class.forName("com.hxtt.sql.access.AccessDriver").newInstance();
-//		            String url = "jdbc:Access:///"+path+"//VITest.mdb";
-//		            conn = DriverManager.getConnection(url);
-////					String dbur1 = "jdbc:odbc:driver={Microsoft Access Driver (*.mdb)};DBQ=C://VITest.mdb";
-////					String dbur1 = "jdbc:odbc:driver={Microsoft Access Driver (*.mdb,*.accdb)};DBQ=C://VITest.mdb";
-////					Connection conn = DriverManager.getConnection(dbur1);
-//					Statement stmt = conn.createStatement();
-//					ResultSet rs = stmt.executeQuery("select * from u_base_info");
-//					while (rs.next()) {
-//						System.out.println(rs.getString(1));
-//					}
-//					rs.close();
-//					stmt.close();
-//					conn.close();
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				} 
-		DBConnection.getInstance();
-			}
-			
 
 }

@@ -260,10 +260,8 @@ public class ExportUtil {
 			String sql="select id from i_base_info where certificate_no='"+test_no+"'";
 			ResultSet rs=st.executeQuery(sql);
 			List<Long> ids=new ArrayList<>();
-			int count=0;
 			while(rs.next()){
 				ids.add(rs.getLong("id"));
-				count++;
 			}
 			rs.close();
 			for (int i = 0; i < ids.size(); i++) {
