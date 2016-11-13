@@ -26,9 +26,9 @@ public class ITestData {
 		DefaultTableModel model=new DefaultTableModel();
 		Vector<Vector<String>> data=new Vector<>();//table的数据
 		Vector<String> column=new Vector<>();//table的列名
-		column.add(0, "20");
-		column.add(1, "50");
-		column.add(2, "80");
+		column.add(0, "1");
+		column.add(1, "5");
+		column.add(2, "20");
 		column.add(3, "100");
 		column.add(4, "120");
 		Vector<String> row1=new Vector<>();//满载-比差
